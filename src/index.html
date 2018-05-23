@@ -9,19 +9,19 @@
 </head>
 <body>
     <h3>何時に退勤しますか?</h3>
-        <input  id="clock_out" type="time" value="19:00">
+        <input  id="leave-time" type="time" value="19:00">
         <button id="btn">決定</button>
 
         <script>
             let btn = document.getElementById('btn');
             btn.addEventListener('click', function(){
-                let time_clock_out = document.getElementById('clock_out').value;
+                let leave_time = document.getElementById('leave-time').value;
                 // mian processに同期通信で値を送る。
-                console.log(time_clock_out);
+                console.log(leave_time);
 
                 // ipc通信の為
                 const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_out_time', time_clock_out);
+                ipcRenderer.send('settings_leave_time', leave_time);
 
             });
         </script>
@@ -76,19 +76,19 @@
 
         // リマインダー処理
 
-        ipcRenderer.on('set_out_time', function(event, time_clock_out){
-            let send_time = time_clock_out.split(':');
+        ipcRenderer.on('set_out_time', function(event, leave_time){
+            let send_time = leave_time.split(':');
             let hour = send_time[0];
             let minute = send_time[1];
             let today_date = new Date();
 
             // 送らてきた時刻のフォーマット修正
-            let clock_out_date = new Date();
-            clock_out_date.setHours(hour);
-            clock_out_date.setMinutes(minute)
+            let leave_date = new Date();
+            leave_date.setHours(hour);
+            leave_date.setMinutes(minute)
 
             // 退勤リマインダー処理
-            if( today_date.getTime() > clock_out_date.getTime() ){
+            if( today_date.getTime() > leave_date.getTime() ){
                 console.log('現在時刻よりも後ろは設定できないです。');
                 let notification = new Notification(
                         '勤之助リマインダー',
@@ -96,13 +96,13 @@
                 );
             } else {
                 // 通知処理
-                notifiClockOut();
-                remindClockOut()
+                notifiSetLeaveTime();
+                remindLeaveTime()
             }
 
-            function remindClockOut(){
+            function remindLeaveTime(){
                 setInterval(function(){
-                    let remind_clok_out = clock_out_date.getTime()
+                    let remind_clok_out = leave_date.getTime()
                     if( today_date.getTime() == remind_clok_out ){
                         let notification = new Notification(
                             '勤之助リマインダー',
@@ -117,11 +117,11 @@
                 },60000);
             }
 
-            function notifiClockOut(){
+            function notifiSetLeaveTime(){
                 setTimeout(function(){
                     let notification = new Notification(
                         '勤之助リマインダー',
-                        { body: "退勤予定時間が"+time_clock_out+"にセットされました!" }
+                        { body: "退勤予定時間が"+leave_time+"にセットされました!" }
                     );
                 }, 1500);
             }

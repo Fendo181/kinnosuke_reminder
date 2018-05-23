@@ -37,8 +37,8 @@ ipcMain.on('settings_changed', function(event, color) {
 });
 
 // 送られてくる退勤時間を受け取る。
-ipcMain.on('settings_out_time', function(event, time_clock_out) {
-    mainWindow.webContents.send('set_out_time', time_clock_out);
+ipcMain.on('settings_leave_time', function(event, leave_time) {
+    mainWindow.webContents.send('set_out_time', leave_time);
 });
 
 function showAboutDaialog(){
