@@ -13,8 +13,8 @@
     <button id="attend-btn">決定</button>
 
     <script>
-            let btn = document.getElementById('attend-btn');
-            btn.addEventListener('click', function(){
+            let attend_btn = document.getElementById('attend-btn');
+            attend_btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('attend-time').value;
                 // mian processに同期通信で値を送る。
                 console.log(leave_time);
@@ -31,8 +31,8 @@
         <button id="leave-btn">決定</button>
 
         <script>
-            let btn = document.getElementById('leave-btn');
-            btn.addEventListener('click', function(){
+            let leave_btn = document.getElementById('leave-btn');
+            leave_btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('leave-time').value;
                 // mian processに同期通信で値を送る。
                 console.log(leave_time);
@@ -109,7 +109,7 @@
             if( today_date.getTime() > leave_date.getTime() ){
                 console.log('現在時刻よりも後ろは設定できないです。');
                 let notification = new Notification(
-                        '勤之助リマインダー',
+                        '勤之助リマインダー',
                         { body: "現在時刻よりも後ろは設定できないです。" }
                 );
             } else {
