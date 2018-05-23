@@ -16,10 +16,6 @@
             let attend_btn = document.getElementById('attend-btn');
             attend_btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('attend-time').value;
-                // mian processに同期通信で値を送る。
-                console.log(leave_time);
-
-                // ipc通信の為
                 const ipcRenderer = require('electron').ipcRenderer;
                 ipcRenderer.send('settings_attend_time', leave_time);
 
@@ -34,10 +30,6 @@
             let leave_btn = document.getElementById('leave-btn');
             leave_btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('leave-time').value;
-                // mian processに同期通信で値を送る。
-                console.log(leave_time);
-
-                // ipc通信の為
                 const ipcRenderer = require('electron').ipcRenderer;
                 ipcRenderer.send('settings_leave_time', leave_time);
 
@@ -88,7 +80,6 @@
 
        function setBackgroundColor(color) {
             document.body.style.backgroundColor = color;
-            //色の変更をweb Storageを使って保存する。
             localStorage.setItem('color', color);
         }
 
@@ -113,7 +104,6 @@
                         { body: "現在時刻よりも後ろは設定できないです。" }
                 );
             } else {
-                // 通知処理
                 notifiSetLeaveTime();
                 remindLeaveTime()
             }
@@ -130,8 +120,6 @@
                             shell.openExternal('https://www.4628.jp/?module=top&rd=1');
                         }
                     }
-                // 1分で回している。
-                // debugするならここを1秒で検証して下さい。(1000)
                 },60000);
             }
 
