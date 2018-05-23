@@ -101,7 +101,7 @@
                 console.log('現在時刻よりも後ろは設定できないです。');
                 let notification = new Notification(
                         '勤之助リマインダー',
-                        { body: "現在時刻よりも後ろは設定できないです。" }
+                        { body: "【退勤】現在時刻よりも後ろは設定できないです。" }
                 );
             } else {
                 notifiSetLeaveTime();
@@ -114,7 +114,7 @@
                     if( today_date.getTime() == remind_clok_out ){
                         let notification = new Notification(
                             '勤之助リマインダー',
-                            { body: "退勤時間になります! タイムカードを打刻して下さい!" }
+                            { body: "退勤】退勤時間になります! タイムカードを打刻して下さい!" }
                         );
                         notification.onclick = function() {
                             shell.openExternal('https://www.4628.jp/?module=top&rd=1');
@@ -127,7 +127,7 @@
                 setTimeout(function(){
                     let notification = new Notification(
                         '勤之助リマインダー',
-                        { body: "退勤予定時間が"+leave_time+"にセットされました!" }
+                        { body: "【退勤】退勤予定時間が"+leave_time+"にセットされました!" }
                     );
                 }, 1500);
             }
