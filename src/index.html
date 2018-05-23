@@ -8,12 +8,30 @@
     <title>謹之助リマインダー</title>
 </head>
 <body>
+    <h3>何時に出社しますか?</h3>
+    <input  id="attend-time" type="time" value="10:00">
+    <button id="attend-btn">決定</button>
+
+    <script>
+            let btn = document.getElementById('attend-btn');
+            btn.addEventListener('click', function(){
+                let leave_time = document.getElementById('attend-time').value;
+                // mian processに同期通信で値を送る。
+                console.log(leave_time);
+
+                // ipc通信の為
+                const ipcRenderer = require('electron').ipcRenderer;
+                ipcRenderer.send('settings_attend_time', leave_time);
+
+            });
+    </script>
+
     <h3>何時に退勤しますか?</h3>
         <input  id="leave-time" type="time" value="19:00">
-        <button id="btn">決定</button>
+        <button id="leave-btn">決定</button>
 
         <script>
-            let btn = document.getElementById('btn');
+            let btn = document.getElementById('leave-btn');
             btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('leave-time').value;
                 // mian processに同期通信で値を送る。
