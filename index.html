@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>謹之助リマインダー</title>
+</head>
+<body>
+    <h3>何時に退勤しますか?</h3>
+        <input  id="clock_out" type="time" value="19:00">
+        <button id="btn">決定</button>
+
+        <script>
+            let btn = document.getElementById('btn');
+            btn.addEventListener('click', function(){
+                let time_clock_out = document.getElementById('clock_out').value;
+                // mian processに同期通信で値を送る。
+                console.log(time_clock_out);
+
+                // ipc通信の為
+                const ipcRenderer = require('electron').ipcRenderer;
+                ipcRenderer.send('settings_out_time', time_clock_out);
+
+            });
+        </script>
+    <h4>デフォルトは19:00にセットされています。</h4>
+    <h4>この時間になると通知がされます。</h4>
+
+    <script>
+        'use script'
+
+        // ライブラリの読み込み
+        const electron = require('electron');
+        const ipcRenderer = electron.ipcRenderer;
+        const remote = electron.remote;
+        const Menu = remote.Menu;
+        const MenuItem = remote.MenuItem;
+        const shell =remote.shell;
+
+        // BackgroundColor処理
+        let color = localStorage.getItem('color') || 'skyblue';
+        setBackgroundColor(color);
+        clickMenu();
+
+        ipcRenderer.on('set_bgcolor', function(event, color){
+            setBackgroundColor(color);
+        });
+
+
+        function clickMenu() {
+            let menu = new Menu();
+            menu.append(new MenuItem({label: 'Skyblue', click: function(){
+                setBackgroundColor('skyblue');
+            }}));
+            menu.append(new MenuItem({label: 'Tomato', click: function(){
+                setBackgroundColor('tomato');
+            }}));
+            menu.append(new MenuItem({label: 'Slate Gray', click: function(){
+                setBackgroundColor('slategray');
+            }}));
+
+            window.addEventListener('contextmenu', function(e){
+                e.preventDefault();
+                // 右クリックでポップアップ表示させる。
+                menu.popup(remote.getCurrentWindow());
+            });
+        }
+
+       function setBackgroundColor(color) {
+            document.body.style.backgroundColor = color;
+            //色の変更をweb Storageを使って保存する。
+            localStorage.setItem('color', color);
+        }
+
+        // リマインダー処理
+
+        ipcRenderer.on('set_out_time', function(event, time_clock_out){
+            let send_time = time_clock_out.split(':');
+            let hour = send_time[0];
+            let minute = send_time[1];
+            let today_date = new Date();
+
+            // 送らてきた時刻のフォーマット修正
+            let clock_out_date = new Date();
+            clock_out_date.setHours(hour);
+            clock_out_date.setMinutes(minute)
+
+            // 退勤リマインダー処理
+            if( today_date.getTime() > clock_out_date.getTime() ){
+                console.log('現在時刻よりも後ろは設定できないです。');
+                let notification = new Notification(
+                        '勤之助リマインダー',
+                        { body: "現在時刻よりも後ろは設定できないです。" }
+                );
+            } else {
+                // 通知処理
+                notifiClockOut();
+                remindClockOut()
+            }
+
+            function remindClockOut(){
+                setInterval(function(){
+                    let remind_clok_out = clock_out_date.getTime()
+                    if( today_date.getTime() == remind_clok_out ){
+                        let notification = new Notification(
+                            '勤之助リマインダー',
+                            { body: "退勤時間になります! タイムカードを打刻して下さい!" }
+                        );
+                        notification.onclick = function() {
+                            shell.openExternal('https://www.4628.jp/?module=top&rd=1');
+                        }
+                    }
+                // 1分で回している。
+                // debugするならここを1秒で検証して下さい。(1000)
+                },60000);
+            }
+
+            function notifiClockOut(){
+                setTimeout(function(){
+                    let notification = new Notification(
+                        '勤之助リマインダー',
+                        { body: "退勤予定時間が"+time_clock_out+"にセットされました!" }
+                    );
+                }, 1500);
+            }
+        });
+
+    </script>
+</body>
+</html>

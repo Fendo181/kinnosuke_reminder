@@ -1,0 +1,11 @@
+body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+    background: skyblue;
+}
+p {
+    color: #fff;
+    font-size: 36px;
+    margin: 0;
+    padding: 0;
+}
