@@ -12,6 +12,12 @@
 npm install --sabve --save-dev
 ```
 
+ローカル環境で確認する。
+
+```
+npm start
+```
+
 アプリケーションを作成する。
 
 ```
