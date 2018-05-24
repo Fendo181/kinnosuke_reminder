@@ -19,7 +19,6 @@ body{
 input[type="time"]{
   background: none;
   border: none;
-  border-bottom: 1px solid;
   outline: none;
 }
 button{
@@ -94,11 +93,32 @@ p,input{
 .form__input{
   flex: 1 1 auto;
   margin: 10px;
+  padding: 10px;
   font-size: 30px;
   transition: background-color ease 200ms;
+  position: relative;
 }
 .form__input:hover{
   background-color: rgba(255,255,255,.2);
+}
+.form__input::after{
+  content: "";
+  width: 0;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  transition: width 500ms ease;
+}
+.attend .form__input:focus::after{
+  width: 100%;
+  background-color: #333;
+}
+.leave .form__input:focus::after{
+  width: 100%;
+  background-color: #ddd;
 }
 .form__btn{
   flex: 0 0 auto;
