@@ -1,8 +1,38 @@
 body {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
-    background: skyblue;
 }
+.bg::before,.bg::after{
+  content:"";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: -1;
+}
+.bg::before{
+  background: linear-gradient(to bottom, rgb(141,183,213) 0%,rgb(141,183,213) 40% ,rgb(252,255,198) 100%) !important;
+}
+.bg::after{
+  background: linear-gradient(to bottom, rgb(40,7,44) 0%,rgb(255,156,99) 100%) !important;
+}
+.attend .bg::before{
+  opacity: 1;
+}
+.attend .bg::after{
+  opacity: 0;
+}
+.leave .bg::before{
+  opacity: 0;
+}
+.leave .bg::after{
+  opacity: 1;
+}
+
 p {
     color: #fff;
     font-size: 36px;
