@@ -9,17 +9,20 @@
 </head>
 <body>
     <h3>何時に出社しますか?</h3>
-    <input  id="attend-time" type="time" value="10:00">
+    <input  id="attend-time"  type="time"  value="10:00">
+    <input  id="attend-status" type="hidden" value="attend">
     <button id="attend-btn">決定</button>
 
     <script>
             let attend_btn = document.getElementById('attend-btn');
+
             attend_btn.addEventListener('click', function(){
                 let attend_time = document.getElementById('attend-time').value;
-                console.log(attend_time);
+                let attend_status = document.getElementById('attend-status').value;
+                let attend = [attend_time,attend_status];
 
                 const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_attend_time', attend_time);
+                ipcRenderer.send('settings_attend_time', attend);
 
             });
     </script>
@@ -88,8 +91,10 @@
         // リマインダー処理
 
         //出勤
-        ipcRenderer.on('set_attend_time', function(event, attend_time){
-            console.log("出勤時間は"+attend_time);
+        ipcRenderer.on('set_attend_time', function(event, attend){
+            console.log("出勤時間は"+attend);
+            let attend_time = attend[0];
+            let attend_status = attend[1];
             createDate(attend_time);
             let today_date = new Date();
         });
@@ -128,7 +133,7 @@
             setTimeout(function(){
                 let notification = new Notification(
                     '勤之助リマインダー',
-                    { body: "【退勤】退勤予定時間が"+leave_time+"にセットされました!" }
+                    { body: "【出勤】出社予定時間が"+leave_time+"にセットされました!" }
                 );
             }, 1500);
         }
