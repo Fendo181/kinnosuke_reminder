@@ -90,7 +90,7 @@
         //出勤
         ipcRenderer.on('set_attend_time', function(event, attend_time){
             console.log("出勤時間は"+attend_time);
-            convertMillisecon(attend_time);
+            createDate(attend_time);
             let today_date = new Date();
         });
 
@@ -143,7 +143,7 @@
             }
         });
 
-        function convertMillisecon(send_time){
+        function createDate(send_time){
             let tmp = send_time.split(':');
             let hour = tmp[0];
             let minute = tmp[1];
