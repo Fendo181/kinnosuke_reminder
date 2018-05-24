@@ -15,6 +15,7 @@ body{
   align-items: center;
   padding: 20px;
   flex-flow: column nowrap;
+  background-image: linear-gradient(to top, #6a85b6 0%, #bac8e0 100%);
 }
 input[type="time"]{
   background: none;
