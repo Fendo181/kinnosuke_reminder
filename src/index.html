@@ -15,9 +15,9 @@
     <script>
             let attend_btn = document.getElementById('attend-btn');
             attend_btn.addEventListener('click', function(){
-                let leave_time = document.getElementById('attend-time').value;
+                let attend_time = document.getElementById('attend-time').value;
                 const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_attend_time', leave_time);
+                ipcRenderer.send('settings_attend_time', attend_time);
 
             });
     </script>
