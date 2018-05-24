@@ -22,7 +22,7 @@
                 let attend = [attend_time,attend_status];
 
                 const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_attend_time', attend);
+                ipcRenderer.send('settings_attend', attend);
 
             });
     </script>
@@ -40,7 +40,7 @@
                 let leave = [leave_time,leave_status];
 
                 const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_leave_time', leave);
+                ipcRenderer.send('settings_leave', leave);
 
             });
         </script>
@@ -95,7 +95,7 @@
         // リマインダー処理
 
         //出勤
-        ipcRenderer.on('set_attend_time', function(event, attend){
+        ipcRenderer.on('set_attend', function(event, attend){
             console.log("出勤時間は"+attend);
             let attend_time = attend[0];
             let attend_status = attend[1];
@@ -104,7 +104,7 @@
         });
 
         // 退勤
-        ipcRenderer.on('set_leave_time', function(event, leave){
+        ipcRenderer.on('set_leave', function(event, leave){
             console.log("退勤時間は"+leave);
             let leave_time = leave[0];
             let leave_status = leave[1];

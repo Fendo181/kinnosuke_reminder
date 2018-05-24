@@ -37,13 +37,13 @@ ipcMain.on('settings_changed', function(event, color) {
 });
 
 // 送られてくる退勤時間を受け取る。
-ipcMain.on('settings_leave_time', function(event, leave) {
-    mainWindow.webContents.send('set_leave_time', leave);
+ipcMain.on('settings_leave', function(event, leave) {
+    mainWindow.webContents.send('set_leave', leave);
 });
 
 // 送られてくる出勤時間を受け取る。
-ipcMain.on('settings_attend_time', function(event, attend) {
-    mainWindow.webContents.send('set_attend_time', attend);
+ipcMain.on('settings_attend', function(event, attend) {
+    mainWindow.webContents.send('set_attend', attend);
 });
 
 
