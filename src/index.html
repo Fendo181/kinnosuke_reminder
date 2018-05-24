@@ -120,7 +120,7 @@
                 );
             } else {
                 notifiSetTime(leave_time, leave_status);
-                remindTime(today_date,leave_time,leave_status)
+                remindTime(leave_time,leave_status)
             }
         });
 
@@ -155,11 +155,11 @@
             }, 1500);
         }
 
-        function remindTime(today,time,status){
+        function remindTime(time,status){
             setInterval(function(){
                 console.log(status);
                     if (status == 'leave'){
-                        if( today.getTime() <= createDate(time) ){
+                        if( new Date().getTime() <= createDate(time) ){
                             console.log('退勤して下さい~!')
                         let notification = new Notification(
                             '勤之助リマインダー',
