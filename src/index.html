@@ -9,55 +9,59 @@
 </head>
 <body>
 
-    <div title="【出勤】この時間になると通知がされます">出勤リマインド</div>
-    <input  id="attend-time" type="time" value="10:00">
-    <script>
-            let attend_time = document.getElementById('attend-time');
-            attend_time.addEventListener('focus', function(){
-              document.body.classList.add('attend');
-            });
-            attend_time.addEventListener('blur', function(){
-              document.body.classList.remove('attend');
-            });
-    </script>
+  <div class="reminder">
+    <p class="reminder__title" title="【出勤】この時間になると通知がされます">出勤リマインド</p>
+    <div class="reminder__form form">
+      <input class="form__input" id="attend-time" type="time" value="10:00">
+      <script>
+      let attend_time = document.getElementById('attend-time');
+      attend_time.addEventListener('focus', function(){
+        document.body.classList.add('attend');
+      });
+      attend_time.addEventListener('blur', function(){
+        document.body.classList.remove('attend');
+      });
+      </script>
 
-    <button id="attend-btn">決定</button>
-
-    <script>
-            let attend_btn = document.getElementById('attend-btn');
-            attend_btn.addEventListener('click', function(){
-                let leave_time = document.getElementById('attend-time').value;
-                const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_attend_time', leave_time);
-
-            });
-    </script>
-
-    <div title="【退勤】この時間になると通知がされます">退勤リマインド</div>
-        <input  id="leave-time" type="time" value="19:00">
-
-        <script>
-                let leave_time = document.getElementById('leave-time');
-                leave_time.addEventListener('focus', function(){
-                  document.body.classList.add('leave');
-                });
-                leave_time.addEventListener('blur', function(){
-                  document.body.classList.remove('leave');
-                });
-        </script>
+      <button class="form__btn" id="attend-btn">決定</button>
+      <script>
+      let attend_btn = document.getElementById('attend-btn');
+      attend_btn.addEventListener('click', function(){
+        let leave_time = document.getElementById('attend-time').value;
+        const ipcRenderer = require('electron').ipcRenderer;
+        ipcRenderer.send('settings_attend_time', leave_time);
+      });
+      </script>
+    </div>
+  </div>
 
 
-        <button id="leave-btn">決定</button>
+  <div class="reminder">
+    <p class="reminder__title" title="【退勤】この時間になると通知がされます">退勤リマインド</p>
+    <div class="reminder__form form">
+      <input class="form__input" id="leave-time" type="time" value="19:00">
+      <script>
+              let leave_time = document.getElementById('leave-time');
+              leave_time.addEventListener('focus', function(){
+                document.body.classList.add('leave');
+              });
+              leave_time.addEventListener('blur', function(){
+                document.body.classList.remove('leave');
+              });
+      </script>
+      <button class="form__btn" id="leave-btn">決定</button>
+      <script>
+          let leave_btn = document.getElementById('leave-btn');
+          leave_btn.addEventListener('click', function(){
+              let leave_time = document.getElementById('leave-time').value;
+              const ipcRenderer = require('electron').ipcRenderer;
+              ipcRenderer.send('settings_leave_time', leave_time);
 
-        <script>
-            let leave_btn = document.getElementById('leave-btn');
-            leave_btn.addEventListener('click', function(){
-                let leave_time = document.getElementById('leave-time').value;
-                const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_leave_time', leave_time);
+          });
+      </script>
+    </div>
+  </div>
 
-            });
-        </script>
 
     <script>
         'use script'
