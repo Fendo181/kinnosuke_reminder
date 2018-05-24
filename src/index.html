@@ -82,7 +82,6 @@
 
             window.addEventListener('contextmenu', function(e){
                 e.preventDefault();
-                // 右クリックでポップアップ表示させる。
                 menu.popup(remote.getCurrentWindow());
             });
         }
@@ -92,29 +91,22 @@
             localStorage.setItem('color', color);
         }
 
-        // リマインダー処理
-
-        //出勤
         ipcRenderer.on('set_attend', function(event, attend){
-            console.log("出勤時間は"+attend);
             let attend_time = attend[0];
             let attend_status = attend[1];
             let today_date = new Date();
 
             createDate(attend_time);
             notifiSetTime(attend_time,attend_status);
-            remindTime(attend_time,attend_status)
+            remindAttendTime(attend_time,attend_status)
         });
 
-        // 退勤
         ipcRenderer.on('set_leave', function(event, leave){
-            console.log("退勤時間は"+leave);
             let leave_time = leave[0];
             let leave_status = leave[1];
             let today_date = new Date();
-            // 退勤リマインダー処理
+
             if( today_date.getTime() > createDate(leave_time) ){
-                console.log('現在時刻よりも後ろは設定できないです。');
                 let notification = new Notification(
                         '勤之助リマインダー',
                         { body: "【退勤】現在時刻よりも後ろは設定できないです。" }
@@ -130,13 +122,10 @@
             let hour = tmp[0];
             let minute = tmp[1];
 
-            // 送らてきた時刻のフォーマット修正
             let date = new Date();
             date.setHours(hour);
             date.setMinutes(minute)
             return date.getTime()
-
-            console.log(date);
         }
 
         function notifiSetTime(time,status){
@@ -159,10 +148,23 @@
         function remindLeaveTime(time,status){
             setInterval(function(){
                 if( new Date().getTime() == createDate(time) ){
-                    console.log("退勤して下さい~!");
                     let notification = new Notification(
                         '勤之助リマインダー',
                         { body: "【退勤】退勤時間になります! " }
+                    );
+                    notification.onclick = function() {
+                        shell.openExternal('https://www.4628.jp/?module=top&rd=1');
+                    }
+                }
+            },1000);
+        }
+
+        function remindAttendTime(time,status){
+            setInterval(function(){
+                if( new Date().getTime() == createDate(time) ){
+                    let notification = new Notification(
+                        '勤之助リマインダー',
+                        { body: "【出勤】出勤時間になります! " }
                     );
                     notification.onclick = function() {
                         shell.openExternal('https://www.4628.jp/?module=top&rd=1');
