@@ -29,14 +29,18 @@
 
     <h3>何時に退勤しますか?</h3>
         <input  id="leave-time" type="time" value="19:00">
+        <input  id="leave-status" type="hidden" value="leave">
         <button id="leave-btn">決定</button>
 
         <script>
             let leave_btn = document.getElementById('leave-btn');
             leave_btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('leave-time').value;
+                let leave_status = document.getElementById('leave-status').value;
+                let leave = [leave_time,leave_status];
+
                 const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_leave_time', leave_time);
+                ipcRenderer.send('settings_leave_time', leave);
 
             });
         </script>
@@ -100,7 +104,11 @@
         });
 
         // 退勤
-        ipcRenderer.on('set_leave_time', function(event, leave_time){
+        ipcRenderer.on('set_leave_time', function(event, leave){
+            console.log("退勤時間は"+leave);
+            let leave_time = leave[0];
+            let leave_status = leave[1];
+
             let today_date = new Date();
             // 退勤リマインダー処理
             if( today_date.getTime() > createDate(leave_time) ){

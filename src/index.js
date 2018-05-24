@@ -37,8 +37,8 @@ ipcMain.on('settings_changed', function(event, color) {
 });
 
 // 送られてくる退勤時間を受け取る。
-ipcMain.on('settings_leave_time', function(event, leave_time) {
-    mainWindow.webContents.send('set_leave_time', leave_time);
+ipcMain.on('settings_leave_time', function(event, leave) {
+    mainWindow.webContents.send('set_leave_time', leave);
 });
 
 // 送られてくる出勤時間を受け取る。
