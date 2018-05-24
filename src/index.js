@@ -82,7 +82,7 @@ app.on('ready', function(){
 
 app.on('window-all-closed', function(){
     //macユーザ以外の処理
-    if(process.platform !== 'darein'){
+    if(process.platform !== 'darwin'){
         app.quit();
     }
 });
