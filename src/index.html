@@ -103,6 +103,7 @@
 
             createDate(attend_time);
             notifiSetTime(attend_time,attend_status);
+            remindTime(attend_time,attend_status)
         });
 
         // 退勤
@@ -120,7 +121,7 @@
                 );
             } else {
                 notifiSetTime(leave_time, leave_status);
-                remindTime(leave_time,leave_status)
+                remindLeaveTime(leave_time,leave_status)
             }
         });
 
@@ -155,19 +156,16 @@
             }, 1500);
         }
 
-        function remindTime(time,status){
+        function remindLeaveTime(time,status){
             setInterval(function(){
-                console.log(status);
-                    if (status == 'leave'){
-                        if( new Date().getTime() <= createDate(time) ){
-                            console.log('退勤して下さい~!')
-                        let notification = new Notification(
-                            '勤之助リマインダー',
-                            { body: "【退勤】退勤時間になります! " }
-                        );
-                        notification.onclick = function() {
-                            shell.openExternal('https://www.4628.jp/?module=top&rd=1');
-                        }
+                if( new Date().getTime() == createDate(time) ){
+                    console.log("退勤して下さい~!");
+                    let notification = new Notification(
+                        '勤之助リマインダー',
+                        { body: "【退勤】退勤時間になります! " }
+                    );
+                    notification.onclick = function() {
+                        shell.openExternal('https://www.4628.jp/?module=top&rd=1');
                     }
                 }
             },1000);
