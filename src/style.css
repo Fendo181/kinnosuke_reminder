@@ -1,11 +1,133 @@
-body {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    padding: 10px;
-    background: skyblue;
+/* 基本設定 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-p {
-    color: #fff;
-    font-size: 36px;
-    margin: 0;
-    padding: 0;
+html,body {
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-flow: column nowrap;
+  background-image: linear-gradient(to top, #6a85b6 0%, #bac8e0 100%);
+}
+input[type="time"]{
+  background: none;
+  border: none;
+  outline: none;
+}
+button{
+  background: none;
+  border: 1px solid;
+  outline: none;
+  border-radius: 5px;
+}
+p,input{
+  transition: color .6s ease;
+  text-align: center;
+}
+
+
+/* 背景アニメーション */
+.bg::before,.bg::after{
+  content:"";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity .6s ease;
+  z-index: -1;
+}
+.bg::before{
+  background: linear-gradient(to bottom, rgb(141,183,213) 0%,rgb(141,183,213) 40% ,rgb(252,255,198) 100%) !important;
+}
+.bg::after{
+  background: linear-gradient(to bottom, rgb(40,7,44) 0%,rgb(255,156,99) 100%) !important;
+}
+.attend .bg::before{
+  opacity: 1;
+}
+.attend .bg::after{
+  opacity: 0;
+}
+.leave .bg::before{
+  opacity: 0;
+}
+.leave .bg::after{
+  opacity: 1;
+}
+
+.attend *{
+  color: #333;
+}
+.leave *{
+  color: #ddd;
+}
+
+
+/* リマインダー */
+.reminder{
+  padding: 20px;
+  margin: 10px;
+  border-radius: 3px;
+  background-color: rgba(255,255,255,.2);
+  box-shadow: 0 6px 10px rgba(0,0,0,.2);
+}
+.reminder__title{
+  font-size: 16px;
+  font-weight: bold;
+}
+.form{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.form__input{
+  flex: 1 1 auto;
+  margin: 10px;
+  padding: 10px;
+  font-size: 30px;
+  transition: background-color ease 200ms;
+  position: relative;
+}
+.form__input:hover{
+  background-color: rgba(255,255,255,.2);
+}
+.form__input::after{
+  content: "";
+  width: 0;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  transition: width 500ms ease;
+}
+.attend .form__input:focus::after{
+  width: 100%;
+  background-color: #333;
+}
+.leave .form__input:focus::after{
+  width: 100%;
+  background-color: #ddd;
+}
+.form__btn{
+  flex: 0 0 auto;
+  margin: 10px;
+  width: 120px;
+  font-size: 20px;
+  transition: 200ms background-color ease;
+}
+.form__btn:hover{
+  background-color: rgba(0,0,0,.2);
 }
