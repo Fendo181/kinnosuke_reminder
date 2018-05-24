@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <div class="reminder" title="【出勤】この時間になると通知がされます">
+  <div class="reminder" id="attend-reminder" title="【出勤】この時間になると通知がされます">
     <p class="reminder__title">出勤リマインド</p>
     <div class="reminder__form form">
       <input class="form__input" id="attend-time" type="time" value="10:00">
@@ -34,9 +34,14 @@
       </script>
     </div>
   </div>
+  <script>
+      let attend_reminder = document.getElementById('attend-reminder');
+      attend_reminder.addEventListener('click', function(){
+          attend_time.focus();
+      });
+  </script>
 
-
-  <div class="reminder" title="【退勤】この時間になると通知がされます">
+  <div class="reminder" id="leave-reminder" title="【退勤】この時間になると通知がされます">
     <p class="reminder__title">退勤リマインド</p>
     <div class="reminder__form form">
       <input class="form__input" id="leave-time" type="time" value="19:00">
@@ -61,6 +66,12 @@
       </script>
     </div>
   </div>
+  <script>
+    let leave_reminder = document.getElementById('leave-reminder');
+    leave_reminder.addEventListener('click', function(){
+      leave_time.focus();
+    });
+  </script>
 
 
     <script>
