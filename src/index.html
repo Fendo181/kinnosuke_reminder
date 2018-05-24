@@ -8,35 +8,71 @@
     <title>謹之助リマインダー</title>
 </head>
 <body>
-    <h3>何時に出社しますか?</h3>
-    <input  id="attend-time" type="time" value="10:00">
-    <button id="attend-btn">決定</button>
 
-    <script>
-            let attend_btn = document.getElementById('attend-btn');
-            attend_btn.addEventListener('click', function(){
-                let leave_time = document.getElementById('attend-time').value;
-                const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_attend_time', leave_time);
+  <div class="reminder" id="attend-reminder" title="【出勤】この時間になると通知がされます">
+    <p class="reminder__title">出勤リマインド</p>
+    <div class="reminder__form form">
+      <input class="form__input" id="attend-time" type="time" value="10:00">
+      <script>
+        let attend_time = document.getElementById('attend-time');
+        attend_time.addEventListener('focus', function(){
+          document.body.classList.add('attend');
+        });
+        attend_time.addEventListener('blur', function(){
+          document.body.classList.remove('attend');
+        });
+      </script>
 
-            });
-    </script>
+      <button class="form__btn" id="attend-btn">決定</button>
+      <script>
+        let attend_btn = document.getElementById('attend-btn');
+        attend_btn.addEventListener('click', function(){
+          let leave_time = document.getElementById('attend-time').value;
+          const ipcRenderer = require('electron').ipcRenderer;
+          ipcRenderer.send('settings_attend_time', leave_time);
+        });
+      </script>
+    </div>
+  </div>
+  <script>
+      let attend_reminder = document.getElementById('attend-reminder');
+      attend_reminder.addEventListener('click', function(){
+          attend_time.focus();
+      });
+  </script>
 
-    <h3>何時に退勤しますか?</h3>
-        <input  id="leave-time" type="time" value="19:00">
-        <button id="leave-btn">決定</button>
+  <div class="reminder" id="leave-reminder" title="【退勤】この時間になると通知がされます">
+    <p class="reminder__title">退勤リマインド</p>
+    <div class="reminder__form form">
+      <input class="form__input" id="leave-time" type="time" value="19:00">
+      <script>
+          let leave_time = document.getElementById('leave-time');
+          leave_time.addEventListener('focus', function(){
+              document.body.classList.add('leave');
+          });
+          leave_time.addEventListener('blur', function(){
+              document.body.classList.remove('leave');
+          });
+      </script>
+      <button class="form__btn" id="leave-btn">決定</button>
+      <script>
+          let leave_btn = document.getElementById('leave-btn');
+          leave_btn.addEventListener('click', function(){
+              let leave_time = document.getElementById('leave-time').value;
+              const ipcRenderer = require('electron').ipcRenderer;
+              ipcRenderer.send('settings_leave_time', leave_time);
 
-        <script>
-            let leave_btn = document.getElementById('leave-btn');
-            leave_btn.addEventListener('click', function(){
-                let leave_time = document.getElementById('leave-time').value;
-                const ipcRenderer = require('electron').ipcRenderer;
-                ipcRenderer.send('settings_leave_time', leave_time);
+          });
+      </script>
+    </div>
+  </div>
+  <script>
+    let leave_reminder = document.getElementById('leave-reminder');
+    leave_reminder.addEventListener('click', function(){
+      leave_time.focus();
+    });
+  </script>
 
-            });
-        </script>
-    <h4>デフォルトは19:00にセットされています。</h4>
-    <h4>この時間になると通知がされます。</h4>
 
     <script>
         'use script'
@@ -49,39 +85,39 @@
         const MenuItem = remote.MenuItem;
         const shell =remote.shell;
 
-        // BackgroundColor処理
-        let color = localStorage.getItem('color') || 'skyblue';
-        setBackgroundColor(color);
-        clickMenu();
-
-        ipcRenderer.on('set_bgcolor', function(event, color){
-            setBackgroundColor(color);
-        });
-
-
-        function clickMenu() {
-            let menu = new Menu();
-            menu.append(new MenuItem({label: 'Skyblue', click: function(){
-                setBackgroundColor('skyblue');
-            }}));
-            menu.append(new MenuItem({label: 'Tomato', click: function(){
-                setBackgroundColor('tomato');
-            }}));
-            menu.append(new MenuItem({label: 'Slate Gray', click: function(){
-                setBackgroundColor('slategray');
-            }}));
-
-            window.addEventListener('contextmenu', function(e){
-                e.preventDefault();
-                // 右クリックでポップアップ表示させる。
-                menu.popup(remote.getCurrentWindow());
-            });
-        }
-
-       function setBackgroundColor(color) {
-            document.body.style.backgroundColor = color;
-            localStorage.setItem('color', color);
-        }
+       //  // BackgroundColor処理
+       //  let color = localStorage.getItem('color') || 'skyblue';
+       //  setBackgroundColor(color);
+       //  clickMenu();
+       //
+       //  ipcRenderer.on('set_bgcolor', function(event, color){
+       //      setBackgroundColor(color);
+       //  });
+       //
+       //
+       //  function clickMenu() {
+       //      let menu = new Menu();
+       //      menu.append(new MenuItem({label: 'Skyblue', click: function(){
+       //          setBackgroundColor('skyblue');
+       //      }}));
+       //      menu.append(new MenuItem({label: 'Tomato', click: function(){
+       //          setBackgroundColor('tomato');
+       //      }}));
+       //      menu.append(new MenuItem({label: 'Slate Gray', click: function(){
+       //          setBackgroundColor('slategray');
+       //      }}));
+       //
+       //      window.addEventListener('contextmenu', function(e){
+       //          e.preventDefault();
+       //          // 右クリックでポップアップ表示させる。
+       //          menu.popup(remote.getCurrentWindow());
+       //      });
+       //  }
+       //
+       // function setBackgroundColor(color) {
+       //      document.body.style.backgroundColor = color;
+       //      localStorage.setItem('color', color);
+       //  }
 
         // リマインダー処理
 
@@ -134,5 +170,6 @@
         });
 
     </script>
+    <div class="bg"></div>
 </body>
 </html>
