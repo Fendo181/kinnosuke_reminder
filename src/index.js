@@ -52,7 +52,7 @@ function showAboutDaialog(){
 
 function showSettingWindow(){
     // create window
-    settingsWindow = new BrowserWindow({width: 600, height:400 });
+    settingsWindow = new BrowserWindow({width: 480, height:320 });
     settingsWindow.loadURL('file://'+ __dirname + '/settings.html');
     // chomeのツールを読み込む
     settingsWindow.webContents.openDevTools();
@@ -66,7 +66,7 @@ function showSettingWindow(){
 function createMainWinowd(){
     Menu.setApplicationMenu(menu);
     // create window
-    mainWindow = new BrowserWindow({width: 600, height:400 });
+    mainWindow = new BrowserWindow({width: 480, height:320 });
     mainWindow.loadURL('file://'+ __dirname + '/index.html');
     // chomeのツールを読み込む
     mainWindow.webContents.openDevTools();
