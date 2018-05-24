@@ -10,6 +10,16 @@
 <body>
     <h3>何時に出社しますか?</h3>
     <input  id="attend-time" type="time" value="10:00">
+    <script>
+            let attend_time = document.getElementById('attend-time');
+            attend_time.addEventListener('focus', function(){
+              document.body.classList.add('attend');
+            });
+            attend_time.addEventListener('blur', function(){
+              document.body.classList.remove('attend');
+            });
+    </script>
+
     <button id="attend-btn">決定</button>
 
     <script>
@@ -24,6 +34,18 @@
 
     <h3>何時に退勤しますか?</h3>
         <input  id="leave-time" type="time" value="19:00">
+
+        <script>
+                let leave_time = document.getElementById('leave-time');
+                leave_time.addEventListener('focus', function(){
+                  document.body.classList.add('leave');
+                });
+                leave_time.addEventListener('blur', function(){
+                  document.body.classList.remove('leave');
+                });
+        </script>
+
+
         <button id="leave-btn">決定</button>
 
         <script>
