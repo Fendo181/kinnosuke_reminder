@@ -99,8 +99,10 @@
             console.log("出勤時間は"+attend);
             let attend_time = attend[0];
             let attend_status = attend[1];
-            createDate(attend_time);
             let today_date = new Date();
+
+            createDate(attend_time);
+            notifiSetTime(attend_time,attend_status);
         });
 
         // 退勤
@@ -108,7 +110,6 @@
             console.log("退勤時間は"+leave);
             let leave_time = leave[0];
             let leave_status = leave[1];
-
             let today_date = new Date();
             // 退勤リマインダー処理
             if( today_date.getTime() > createDate(leave_time) ){
@@ -137,15 +138,6 @@
             console.log(date);
         }
 
-        function notifiSetAttendTime(send_time){
-            setTimeout(function(){
-                let notification = new Notification(
-                    '勤之助リマインダー',
-                    { body: "【出勤】出社予定時間が"+leave_time+"にセットされました!" }
-                );
-            }, 1500);
-        }
-
         function notifiSetTime(time,status){
             setTimeout(function(){
                 if( status =='leave'){
@@ -154,7 +146,12 @@
                         { body: "【退勤】退勤予定時間が"+time+"にセットされました!" }
                     );
                 }
-
+                else if (status =='attend'){
+                    let notification = new Notification(
+                        '勤之助リマインダー',
+                        { body: "【出勤】出勤予定時間が"+time+"にセットされました!" }
+                    );
+                }
             }, 1500);
         }
 
