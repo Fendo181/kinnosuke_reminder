@@ -41,6 +41,14 @@ ipcMain.on('settings_leave_time', function(event, leave_time) {
     mainWindow.webContents.send('set_out_time', leave_time);
 });
 
+// 送られてくる出勤時間を受け取る。
+ipcMain.on('settings_attend_time', function(event, attend_time) {
+    mainWindow.webContents.send('set_attend_time', attend_time);
+});
+
+
+
+
 function showAboutDaialog(){
     dialog.showMessageBox({
         type: 'info',

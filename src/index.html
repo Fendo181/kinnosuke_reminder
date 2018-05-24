@@ -16,6 +16,8 @@
             let attend_btn = document.getElementById('attend-btn');
             attend_btn.addEventListener('click', function(){
                 let attend_time = document.getElementById('attend-time').value;
+                console.log(attend_time);
+
                 const ipcRenderer = require('electron').ipcRenderer;
                 ipcRenderer.send('settings_attend_time', attend_time);
 
@@ -84,7 +86,11 @@
         }
 
         // リマインダー処理
+        ipcRenderer.on('set_attend_time', function(event, attend_time){
+            console.log("出勤時間は"+attend_time);
+        });
 
+        // 退勤
         ipcRenderer.on('set_out_time', function(event, leave_time){
             let send_time = leave_time.split(':');
             let hour = send_time[0];
