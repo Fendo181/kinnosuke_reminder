@@ -86,8 +86,12 @@
         }
 
         // リマインダー処理
+
+        //出勤
         ipcRenderer.on('set_attend_time', function(event, attend_time){
             console.log("出勤時間は"+attend_time);
+            convertMillisecon(attend_time);
+            let today_date = new Date();
         });
 
         // 退勤
@@ -139,6 +143,17 @@
             }
         });
 
+        function convertMillisecon(send_time){
+            let tmp = send_time.split(':');
+            let hour = tmp[0];
+            let minute = tmp[1];
+
+            // 送らてきた時刻のフォーマット修正
+            let date = new Date();
+            date.setHours(hour);
+            date.setMinutes(minute)
+            console.log(date);
+        }
     </script>
 </body>
 </html>
