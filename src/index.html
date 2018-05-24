@@ -105,8 +105,8 @@
                         { body: "【退勤】現在時刻よりも後ろは設定できないです。" }
                 );
             } else {
-                notifiSetLeaveTime();
-                remindLeaveTime()
+                notifiSetLeaveTime(leave_time);
+                remindLeaveTime(today_date,leave_time)
             }
         });
 
@@ -124,8 +124,7 @@
             console.log(date);
         }
 
-
-        function notifiSetLeaveTime(){
+        function notifiSetAttendTime(send_time){
             setTimeout(function(){
                 let notification = new Notification(
                     '勤之助リマインダー',
@@ -134,10 +133,18 @@
             }, 1500);
         }
 
-        function remindLeaveTime(){
+        function notifiSetLeaveTime(leave_time){
+            setTimeout(function(){
+                let notification = new Notification(
+                    '勤之助リマインダー',
+                    { body: "【退勤】退勤予定時間が"+leave_time+"にセットされました!" }
+                );
+            }, 1500);
+        }
+
+        function remindLeaveTime(today_date,leave_time){
             setInterval(function(){
-                let remind_clok_out = leave_date.getTime()
-                if( today_date.getTime() == remind_clok_out ){
+                if( today_date.getTime() == createDate(leave_time) ){
                     let notification = new Notification(
                         '勤之助リマインダー',
                         { body: "【退勤】退勤時間になります! タイムカードを打刻して下さい!" }
