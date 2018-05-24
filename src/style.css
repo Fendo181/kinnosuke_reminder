@@ -76,7 +76,11 @@ p,input{
 
 /* リマインダー */
 .reminder{
-  margin: 20px;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 3px;
+  background-color: rgba(255,255,255,.2);
+  box-shadow: 0 6px 10px rgba(0,0,0,.2);
 }
 .reminder__title{
   font-size: 16px;
