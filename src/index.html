@@ -118,7 +118,7 @@
                         { body: "【退勤】現在時刻よりも後ろは設定できないです。" }
                 );
             } else {
-                notifiSetLeaveTime(leave_time);
+                notifiSetTime(leave_time, leave_status);
                 remindLeaveTime(today_date,leave_time)
             }
         });
@@ -146,12 +146,15 @@
             }, 1500);
         }
 
-        function notifiSetLeaveTime(leave_time){
+        function notifiSetTime(time,status){
             setTimeout(function(){
-                let notification = new Notification(
-                    '勤之助リマインダー',
-                    { body: "【退勤】退勤予定時間が"+leave_time+"にセットされました!" }
-                );
+                if( status =='leave'){
+                    let notification = new Notification(
+                        '勤之助リマインダー',
+                        { body: "【退勤】退勤予定時間が"+time+"にセットされました!" }
+                    );
+                }
+
             }, 1500);
         }
 
