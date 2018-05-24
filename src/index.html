@@ -91,7 +91,7 @@
         });
 
         // 退勤
-        ipcRenderer.on('set_out_time', function(event, leave_time){
+        ipcRenderer.on('set_leave_time', function(event, leave_time){
             let send_time = leave_time.split(':');
             let hour = send_time[0];
             let minute = send_time[1];
