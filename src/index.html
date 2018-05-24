@@ -167,14 +167,14 @@
             setTimeout(function(){
                 if( status =='leave'){
                     let notification = new Notification(
-                        '勤之助リマインダー',
-                        { body: "【退勤】退勤予定時間が"+time+"にセットされました!" }
+                        '退勤リマインド',
+                        { body: time+"にセットされました!" }
                     );
                 }
                 else if (status =='attend'){
                     let notification = new Notification(
-                        '勤之助リマインダー',
-                        { body: "【出勤】出勤予定時間が"+time+"にセットされました!" }
+                        '出勤リマインド',
+                        { body: time+"にセットされました!" }
                     );
                 }
             }, 1500);
@@ -184,8 +184,8 @@
             setInterval(function(){
                 if( new Date().getTime() == createDate(time) ){
                     let notification = new Notification(
-                        '勤之助リマインダー',
-                        { body: "【退勤】退勤時間になります! " }
+                        '退勤リマインド',
+                        { body: "タイムカードを押して退勤して下さい。お疲れ様でした。 " }
                     );
                     notification.onclick = function() {
                         shell.openExternal('https://www.4628.jp/?module=top&rd=1');
@@ -198,8 +198,8 @@
             setInterval(function(){
                 if( new Date().getTime() == createDate(time) ){
                     let notification = new Notification(
-                        '勤之助リマインダー',
-                        { body: "【出勤】出勤時間になります! " }
+                        '出勤リマインド',
+                        { body: "タイムカードを押して出勤して下さい。" }
                     );
                     notification.onclick = function() {
                         shell.openExternal('https://www.4628.jp/?module=top&rd=1');
