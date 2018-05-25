@@ -30,7 +30,7 @@ npm start
 node_modules/.bin/electron-packager . kinnosuke_reminder --platform=darwin --arch=x64 --icons=icons/512*512.icns
 ```
 
-`kinnosuke_riminder-darwin-x64/innosuke_riminder.app`が生成されます。
+`kinnosuke_reminder-darwin-x64/kinnosuke_reminder.app`が生成されます。
 
 ### Feature
 
@@ -46,6 +46,3 @@ node_modules/.bin/electron-packager . kinnosuke_reminder --platform=darwin --arc
 
 - `tecchan`
 - `endu`
-
-
-
