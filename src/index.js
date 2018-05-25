@@ -9,17 +9,12 @@ const dialog = electron.dialog; //ダイアログを読み込む。
 const ipcMain = electron.ipcMain; //ipcモジュールを読むこむ。ipc:inter-Process Communication
 
 let mainWindow;
-let settingsWindow;
 
 let menuTemplate = [{
     label: 'kinnosuke_reminder',
     submenu: [
         { label: 'About', accelerator: 'CmdOrCtrl+Shift+A', click: function(){
             showAboutDaialog();
-        } },
-        { type: 'separator'},
-        { label: 'Setting', accelerator: 'CmdOrCtrl+,', click: function(){
-            showSettingWindow();
         } },
         { type: 'separator'},
         { label: 'Quit', accelerator: 'CmdOrCtrl+C', click: function(){
@@ -30,11 +25,6 @@ let menuTemplate = [{
 
 // テンプレートを読みこんでくる。
 let menu = Menu.buildFromTemplate(menuTemplate)
-
-// settings.htmlから送られてきた値を受け取る。
-ipcMain.on('settings_changed', function(event, color) {
-    mainWindow.webContents.send('set_bgcolor', color);
-});
 
 // 送られてくる退勤時間を受け取る。
 ipcMain.on('settings_leave', function(event, leave) {
@@ -54,22 +44,10 @@ function showAboutDaialog(){
         type: 'info',
         buttons: ['OK'],
         message: 'About This App',
-        detail: 'This app was created by @Fendo181'
+        detail: 'This app was created by @endu,@tecchan'
     })
 }
 
-function showSettingWindow(){
-    // create window
-    settingsWindow = new BrowserWindow({width: 600, height:400 });
-    settingsWindow.loadURL('file://'+ __dirname + '/settings.html');
-    // chomeのツールを読み込む
-    // settingsWindow.webContents.openDevTools();
-    settingsWindow.show();
-    // 閉じた際の処理
-    settingsWindow.on('closed', function(){
-        settingsWindow = null;
-    });
-}
 
 function createMainWinowd(){
     Menu.setApplicationMenu(menu);
