@@ -1,5 +1,7 @@
 ## 勤之助リマインダー
 
+![sample.png](https://github.com/Fendo181/kinnosuke_reminder/blob/master/pic/sample.png)
+
 ### Download
 
 しばし待たれよ
