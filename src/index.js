@@ -71,7 +71,7 @@ function showSettingWindow(){
     });
 }
 
-function createMainWinowd(){
+function createMainWindow(){
     Menu.setApplicationMenu(menu);
     // create window
     mainWindow = new BrowserWindow({width: 600, height:400 });
@@ -85,7 +85,7 @@ function createMainWinowd(){
 }
 
 app.on('ready', function(){
-    createMainWinowd();
+    createMainWindow();
 });
 
 app.on('window-all-closed', function(){
@@ -97,6 +97,6 @@ app.on('window-all-closed', function(){
 
 app.on('activate',function(){
     if(mainWindow  === null){
-      createMainWinowd();
+      createMainWindow();
     }
 });
