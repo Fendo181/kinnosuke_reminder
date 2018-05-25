@@ -1,10 +1,18 @@
-## 勤之助リマインダー
+## 勤之助リマインダー(β)
 
 ![sample.png](https://github.com/Fendo181/kinnosuke_reminder/blob/master/pic/sample.png)
 
 ### Download
+- [こちら](https://pepabo.slack.com/archives/DAGA87MUM/p1527221805000234)からダウンロードしてください。
 
-しばし待たれよ
+### Todo
+
+しばし待たれよ。
+
+- [ ] Macを開けた際に通知を出すようする。
+- [ ] WebPushで通勤、出勤ができる。
+- [ ] Snooz機能できる。
+- [ ] フレックス時間がわかる。
 
 ### Setup
 
@@ -28,6 +36,11 @@ node_modules/.bin/electron-packager . kinnosuke_reminder --platform=darwin --arc
 ```
 
 `kinnosuke_riminder-darwin-x64/innosuke_riminder.app`が生成されます。
+
+### Author
+
+- @endu
+- @tecchan
 
 ### License
 
