@@ -24,8 +24,7 @@ npm start
 
 ```
 # Mac 64bit
-node_modules/.bin/electron-packager . kinnosuke_r
-eminder --platform=darwin --arch=x64 --icons=icons/512*512.icns
+node_modules/.bin/electron-packager . kinnosuke_reminder --platform=darwin --arch=x64 --icons=icons/512*512.icns
 ```
 
 `kinnosuke_riminder-darwin-x64/innosuke_riminder.app`が生成されます。
