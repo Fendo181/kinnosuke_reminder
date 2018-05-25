@@ -7,7 +7,7 @@
 
 windows,Mac両方のプラットフォームで対応してます。
 
-[こちら](https://www.dropbox.com/home/%E5%8B%A4%E4%B9%8B%E5%8A%A9%E3%83%AA%E3%83%9E%E3%82%A4%E3%83%B3%E3%83%80%E3%83%BC)からダウンロードしてください。
+[こちら](https://www.dropbox.com/sh/ze0cba8n7mgbfth/AAATf9J0dS4fdRVW1Ktl7Xupa?dl=0)からダウンロードしてください。
 
 ### Setup
 
