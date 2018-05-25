@@ -63,7 +63,7 @@ function showSettingWindow(){
     settingsWindow = new BrowserWindow({width: 600, height:400 });
     settingsWindow.loadURL('file://'+ __dirname + '/settings.html');
     // chomeのツールを読み込む
-    settingsWindow.webContents.openDevTools();
+    // settingsWindow.webContents.openDevTools();
     settingsWindow.show();
     // 閉じた際の処理
     settingsWindow.on('closed', function(){
@@ -77,7 +77,7 @@ function createMainWinowd(){
     mainWindow = new BrowserWindow({width: 600, height:400 });
     mainWindow.loadURL('file://'+ __dirname + '/index.html');
     // chomeのツールを読み込む
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
     // 閉じた際の処理
     mainWindow.on('closed', function(){
         mainWindow = null;
