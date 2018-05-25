@@ -32,7 +32,7 @@ node_modules/.bin/electron-packager . kinnosuke_reminder --platform=darwin --arc
 
 `kinnosuke_riminder-darwin-x64/innosuke_riminder.app`が生成されます。
 
-### Featur
+### Feature
 
 - [ ] スヌーズ機能
 - [ ] WebPush通勤、出勤ができる。
