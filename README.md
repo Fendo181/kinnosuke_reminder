@@ -35,7 +35,7 @@ node_modules/.bin/electron-packager . kinnosuke_reminder --platform=darwin --arc
 ### Feature
 
 - [ ] スヌーズ機能
-- [ ] WebPush通勤、出勤ができる。
+- [ ] WebPushから出勤、退勤ができる。
 - [ ] フレックスタイムが確認できる。
 
 ### License
