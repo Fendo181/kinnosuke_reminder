@@ -30,9 +30,7 @@
         document.getElementById('attend-time').value = attend_set_time;
 
         let attend_btn = document.getElementById('attend-btn');
-
         attend_btn.addEventListener('click', function(){
-            console.log('set前の値は'+localStorage.getItem('attend_time'));
             let attend_time = document.getElementById('attend-time').value;
             let attend_status = document.getElementById('attend-status').value;
             let attend = [attend_time,attend_status];
@@ -101,7 +99,6 @@
 
         ipcRenderer.on('set_attend', function(event, attend){
             localStorage.setItem('attend_time',  attend[0]);
-            console.log('set後のの値は'+localStorage.getItem('attend_time'));
             let attend_time = localStorage.getItem('attend_time');
             let attend_status = attend[1];
             let today_date = new Date();
