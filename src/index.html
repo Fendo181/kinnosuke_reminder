@@ -66,6 +66,9 @@
       <input  class="form__input" id="leave-status" type="hidden" value="leave">
       <button class="form__btn" id="leave-btn">決定</button>
       <script>
+            let leave_set_time = localStorage.getItem('leave_time') || "19:00";
+            document.getElementById('leave-time').value = leave_set_time;
+
             let leave_btn = document.getElementById('leave-btn');
             leave_btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('leave-time').value;
@@ -109,6 +112,7 @@
         });
 
         ipcRenderer.on('set_leave', function(event, leave){
+            localStorage.setItem('leave_time',  leave[0]);
             let leave_time = leave[0];
             let leave_status = leave[1];
             let today_date = new Date();
