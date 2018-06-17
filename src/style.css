@@ -35,9 +35,15 @@ p,input{
 
 
 /* 背景アニメーション */
-.bg::before,.bg::after{
-  content:"";
-  display: block;
+.bg{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+.bg > div{
   position: absolute;
   top: 0;
   right: 0;
@@ -45,33 +51,56 @@ p,input{
   left: 0;
   opacity: 0;
   transition: opacity .6s ease;
-  z-index: -1;
-}
-.bg::before{
-  background: linear-gradient(to bottom, rgb(141,183,213) 0%,rgb(141,183,213) 40% ,rgb(252,255,198) 100%) !important;
-}
-.bg::after{
-  background: linear-gradient(to bottom, rgb(40,7,44) 0%,rgb(255,156,99) 100%) !important;
-}
-.attend .bg::before{
-  opacity: 1;
-}
-.attend .bg::after{
-  opacity: 0;
-}
-.leave .bg::before{
-  opacity: 0;
-}
-.leave .bg::after{
-  opacity: 1;
 }
 
-.attend *{
-  color: #333;
-}
-.leave *{
-  color: #ddd;
-}
+.bg__time00{background: linear-gradient(to bottom, #0C002E 0%,#23264F 100%);}
+.bg__time01{background: linear-gradient(to bottom, #23264F 0%,#3D4F73 100%);}
+.bg__time02{background: linear-gradient(to bottom, #3D4F73 0%,#557594 100%);}
+.bg__time03{background: linear-gradient(to bottom, #557594 0%,#6A99B3 100%);}
+.bg__time04{background: linear-gradient(to bottom, #6A99B3 0%,#85C2D7 100%);}
+.bg__time05{background: linear-gradient(to bottom, #85C2D7 0%,#9DEAFA 100%);}
+.bg__time06{background: linear-gradient(to bottom, #9DEAFA 0%,#8AE1FA 100%);}
+.bg__time07{background: linear-gradient(to bottom, #8AE1FA 0%,#70CFF4 100%);}
+.bg__time08{background: linear-gradient(to bottom, #70CFF4 0%,#5AC0EF 100%);}
+.bg__time09{background: linear-gradient(to bottom, #5AC0EF 0%,#3CACE8 100%);}
+.bg__time10{background: linear-gradient(to bottom, #3CACE8 0%,#1F99E2 100%);}
+.bg__time11{background: linear-gradient(to bottom, #1F99E2 0%,#0486DC 100%);}
+.bg__time12{background: linear-gradient(to bottom, #0486DC 0%,#248AC1 100%);}
+.bg__time13{background: linear-gradient(to bottom, #248AC1 0%,#1987CC 100%);}
+.bg__time14{background: linear-gradient(to bottom, #1987CC 0%,#1588F9 100%);}
+.bg__time15{background: linear-gradient(to bottom, #1588F9 0%,#478DD2 100%);}
+.bg__time16{background: linear-gradient(to bottom, #478DD2 0%,#87949A 100%);}
+.bg__time17{background: linear-gradient(to bottom, #87949A 0%,#BA996C 100%);}
+.bg__time18{background: linear-gradient(to bottom, #BA996C 0%,#957166 100%);}
+.bg__time19{background: linear-gradient(to bottom, #957166 0%,#593967 100%);}
+.bg__time20{background: linear-gradient(to bottom, #593967 0%,#280B67 100%);}
+.bg__time21{background: linear-gradient(to bottom, #280B67 0%,#170056 100%);}
+.bg__time22{background: linear-gradient(to bottom, #170056 0%,#10003D 100%);}
+.bg__time23{background: linear-gradient(to bottom, #10003D 0%,#0C002E 100%);}
+.time00 .bg__time00{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time01 .bg__time01{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time02 .bg__time02{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time03 .bg__time03{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time04 .bg__time04{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time05 .bg__time05{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time06 .bg__time06{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time07 .bg__time07{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time08 .bg__time08{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time09 .bg__time09{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time10 .bg__time10{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time11 .bg__time11{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time12 .bg__time12{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time13 .bg__time13{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time14 .bg__time14{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time15 .bg__time15{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time16 .bg__time16{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time17 .bg__time17{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time18 .bg__time18{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time19 .bg__time19{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time20 .bg__time20{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time21 .bg__time21{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time22 .bg__time22{opacity: 1;transition-duration: 0s;z-index: -1;}
+.time23 .bg__time23{opacity: 1;transition-duration: 0s;z-index: -1;}
 
 
 /* リマインダー */
