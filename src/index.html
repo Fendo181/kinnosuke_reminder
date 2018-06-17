@@ -14,13 +14,13 @@
     <div class="reminder__form form">
       <input class="form__input" id="attend-time" type="time" value="10:00">
       <script>
-        let attend_time = document.getElementById('attend-time');
-        attend_time.addEventListener('focus', function(){
-          document.body.classList.add('attend');
-        });
-        attend_time.addEventListener('blur', function(){
-          document.body.classList.remove('attend');
-        });
+          let attend_time = document.getElementById('attend-time');
+          attend_time.addEventListener('focus', function(e){
+              attachTimeClass(e);
+          });
+          attend_time.addEventListener('change', function(e){
+              attachTimeClass(e);
+          });
       </script>
 
       <input class="form__input" id="attend-status" type="hidden" value="attend">
@@ -52,11 +52,11 @@
       <input class="form__input" id="leave-time" type="time" value="19:00">
       <script>
           let leave_time = document.getElementById('leave-time');
-          leave_time.addEventListener('focus', function(){
-              document.body.classList.add('leave');
+          leave_time.addEventListener('focus', function(e){
+              attachTimeClass(e);
           });
-          leave_time.addEventListener('blur', function(){
-              document.body.classList.remove('leave');
+          leave_time.addEventListener('change', function(e){
+              attachTimeClass(e);
           });
       </script>
       <input  class="form__input" id="leave-status" type="hidden" value="leave">
@@ -172,6 +172,13 @@
                     }
                 }
             },60000);
+        }
+        function attachTimeClass(event){
+            let bg = document.getElementById('bg');
+            let classStr = event.target.value.substring(0,2);
+            bg.removeAttribute('class');
+            bg.classList.add("bg");
+            bg.classList.add("time" + classStr);
         }
     </script>
     <div class="bg"></div>
