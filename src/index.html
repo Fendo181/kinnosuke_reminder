@@ -26,16 +26,16 @@
       <input class="form__input" id="attend-status" type="hidden" value="attend">
       <button class="form__btn" id="attend-btn">決定</button>
       <script>
-        let attend_btn = document.getElementById('attend-btn');
+          let attend_btn = document.getElementById('attend-btn');
 
-        attend_btn.addEventListener('click', function(){
-            let attend_time = document.getElementById('attend-time').value;
-            let attend_status = document.getElementById('attend-status').value;
-            let attend = [attend_time,attend_status];
+          attend_btn.addEventListener('click', function(){
+              let attend_time = document.getElementById('attend-time').value;
+              let attend_status = document.getElementById('attend-status').value;
+              let attend = [attend_time,attend_status];
 
-            const ipcRenderer = require('electron').ipcRenderer;
-            ipcRenderer.send('settings_attend', attend);
-        });
+              const ipcRenderer = require('electron').ipcRenderer;
+              ipcRenderer.send('settings_attend', attend);
+          });
       </script>
     </div>
   </div>
