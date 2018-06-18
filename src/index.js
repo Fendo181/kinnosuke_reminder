@@ -55,7 +55,7 @@ function createMainWindow(){
     mainWindow = new BrowserWindow({width: 600, height:400 });
     mainWindow.loadURL('file://'+ __dirname + '/index.html');
     // chomeのツールを読み込む
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
     // 閉じた際の処理
     mainWindow.on('closed', function(){
         mainWindow = null;

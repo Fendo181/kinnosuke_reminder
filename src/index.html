@@ -26,12 +26,14 @@
       <input class="form__input" id="attend-status" type="hidden" value="attend">
       <button class="form__btn" id="attend-btn">決定</button>
       <script>
-          let attend_btn = document.getElementById('attend-btn');
+        let attend_set_time = localStorage.getItem('attend_time') || "10:00";
+        document.getElementById('attend-time').value = attend_set_time;
 
-          attend_btn.addEventListener('click', function(){
-              let attend_time = document.getElementById('attend-time').value;
-              let attend_status = document.getElementById('attend-status').value;
-              let attend = [attend_time,attend_status];
+        let attend_btn = document.getElementById('attend-btn');
+        attend_btn.addEventListener('click', function(){
+            let attend_time = document.getElementById('attend-time').value;
+            let attend_status = document.getElementById('attend-status').value;
+            let attend = [attend_time,attend_status];
 
               const ipcRenderer = require('electron').ipcRenderer;
               ipcRenderer.send('settings_attend', attend);
@@ -62,6 +64,9 @@
       <input  class="form__input" id="leave-status" type="hidden" value="leave">
       <button class="form__btn" id="leave-btn">決定</button>
       <script>
+            let leave_set_time = localStorage.getItem('leave_time') || "19:00";
+            document.getElementById('leave-time').value = leave_set_time;
+
             let leave_btn = document.getElementById('leave-btn');
             leave_btn.addEventListener('click', function(){
                 let leave_time = document.getElementById('leave-time').value;
@@ -119,7 +124,8 @@
         const shell =remote.shell;
 
         ipcRenderer.on('set_attend', function(event, attend){
-            let attend_time = attend[0];
+            localStorage.setItem('attend_time',  attend[0]);
+            let attend_time = localStorage.getItem('attend_time');
             let attend_status = attend[1];
             let today_date = new Date();
 
@@ -129,6 +135,7 @@
         });
 
         ipcRenderer.on('set_leave', function(event, leave){
+            localStorage.setItem('leave_time',  leave[0]);
             let leave_time = leave[0];
             let leave_status = leave[1];
             let today_date = new Date();
