@@ -14,13 +14,13 @@
     <div class="reminder__form form">
       <input class="form__input" id="attend-time" type="time" value="10:00">
       <script>
-        let attend_time = document.getElementById('attend-time');
-        attend_time.addEventListener('focus', function(){
-          document.body.classList.add('attend');
-        });
-        attend_time.addEventListener('blur', function(){
-          document.body.classList.remove('attend');
-        });
+          let attend_time = document.getElementById('attend-time');
+          attend_time.addEventListener('focus', function(e){
+              attachTimeClass(e);
+          });
+          attend_time.addEventListener('change', function(e){
+              attachTimeClass(e);
+          });
       </script>
 
       <input class="form__input" id="attend-status" type="hidden" value="attend">
@@ -35,9 +35,9 @@
             let attend_status = document.getElementById('attend-status').value;
             let attend = [attend_time,attend_status];
 
-            const ipcRenderer = require('electron').ipcRenderer;
-            ipcRenderer.send('settings_attend', attend);
-        });
+              const ipcRenderer = require('electron').ipcRenderer;
+              ipcRenderer.send('settings_attend', attend);
+          });
       </script>
     </div>
   </div>
@@ -54,11 +54,11 @@
       <input class="form__input" id="leave-time" type="time" value="19:00">
       <script>
           let leave_time = document.getElementById('leave-time');
-          leave_time.addEventListener('focus', function(){
-              document.body.classList.add('leave');
+          leave_time.addEventListener('focus', function(e){
+              attachTimeClass(e);
           });
-          leave_time.addEventListener('blur', function(){
-              document.body.classList.remove('leave');
+          leave_time.addEventListener('change', function(e){
+              attachTimeClass(e);
           });
       </script>
       <input  class="form__input" id="leave-status" type="hidden" value="leave">
@@ -85,6 +85,32 @@
       leave_time.focus();
     });
   </script>
+  <div id="bg" class="bg">
+    <div class="bg__time00"></div>
+    <div class="bg__time01"></div>
+    <div class="bg__time02"></div>
+    <div class="bg__time03"></div>
+    <div class="bg__time04"></div>
+    <div class="bg__time05"></div>
+    <div class="bg__time06"></div>
+    <div class="bg__time07"></div>
+    <div class="bg__time08"></div>
+    <div class="bg__time09"></div>
+    <div class="bg__time10"></div>
+    <div class="bg__time11"></div>
+    <div class="bg__time12"></div>
+    <div class="bg__time13"></div>
+    <div class="bg__time14"></div>
+    <div class="bg__time15"></div>
+    <div class="bg__time16"></div>
+    <div class="bg__time17"></div>
+    <div class="bg__time18"></div>
+    <div class="bg__time19"></div>
+    <div class="bg__time20"></div>
+    <div class="bg__time21"></div>
+    <div class="bg__time22"></div>
+    <div class="bg__time23"></div>
+  </div>
 
     <script>
         'use script'
@@ -180,7 +206,13 @@
                 }
             },60000);
         }
+        function attachTimeClass(event){
+            let bg = document.getElementById('bg');
+            let classStr = event.target.value.substring(0,2);
+            bg.removeAttribute('class');
+            bg.classList.add("bg");
+            bg.classList.add("time" + classStr);
+        }
     </script>
-    <div class="bg"></div>
 </body>
 </html>
