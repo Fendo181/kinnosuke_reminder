@@ -3,3 +3,4 @@ kinnosuke_reminder-darwin-x64/
 kinnosuke_reminder-win32-x64/
 .commit_template
 .DS_Store
+screenshot/*
