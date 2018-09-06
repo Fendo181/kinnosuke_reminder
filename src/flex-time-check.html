@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FlexTimeCheck</title>
+    <style type="text/css">
+        #error {
+            padding: 12px;
+            font-weight: 850;
+            color: #262626;
+            background: #FFEBE8;
+            border: 2px solid #990000;
+        }
+
+        #success {
+            padding: 12px;
+            font-weight: 850;
+            color: #262626;
+            background: #CCFFCC;
+            border: 2px solid rgb(62.4%, 100%, 62.4%);
+        }
+
+        #logined {
+            padding: 12px;
+            font-weight: 850;
+            color: #262626;
+            background: rgb(255, 231, 95);
+            border: 2px solid rgb(255, 244, 180);
+        }
+    </style>
+</head>
+
+<body onload="proc();">
+    <h2>FlexTimeCheck</h2>
+
+    <div id="logined">
+    </div>
+    <div id="error">
+    </div>
+    <p>今月の勤怠</p>
+    <p>
+        ※表示されるまで最大5秒ほどかかります。
+    </p>
+    <div id="success">
+    </div>
+    <script>
+        function proc() {
+            const puppeteer = require('puppeteer');
+
+            // 初期状態ではメッセージは非表示
+            document.getElementById("error").style.visibility = "hidden";
+            document.getElementById("success").style.visibility = "hidden";
+
+            // まだ勤之助にログインをしていない
+            console.log(localStorage.getItem('loginFlg'));
+            if (!localStorage.getItem('loginFlg')) {
+                document.getElementById("success").style.visibility = "hidden";
+                document.getElementById("logined").style.visibility = "hidden";
+                document.getElementById("error").style.visibility = "visible";
+
+                document.getElementById("error").textContent = '先にsetting画面から勤之助にログインをして下さい。';
+            } else {
+                document.getElementById("success").style.visibility = "hidden";
+                document.getElementById("logined").style.visibility = "visible";
+                document.getElementById("error").style.visibility = "hidden";
+
+                document.getElementById("logined").textContent = '勤之助にログイン済みです。';
+            }
+
+            let loginId = localStorage.getItem('loginId');
+            let loginPassword = localStorage.getItem('loginPassword');
+            (async () => {
+                const browser = await puppeteer.launch({
+                    args: [
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox'
+                    ]
+                });
+
+                const page = await browser.newPage();
+                await page.goto('https://flex-time-check.lolipop.io/');
+                await page.screenshot({
+                    path: './screenshot/flext.png',
+                    fullPage: true
+                });
+
+                //フォーム入力
+                await page.type('input[name="user[id]"]', loginId);
+                await page.type('input[name="user[password]"]', loginPassword);
+                await page.screenshot({
+                    path: './screenshot/flext2.png',
+                    fullPage: true
+                });
+                // ログインする
+                const loginElement = await page.$('input[type=submit]');
+                await loginElement.click();
+                await page.screenshot({
+                    path: './screenshot/flex3.png',
+                    fullPage: true
+                });
+
+                const sucessMeesage = await page.$('.alert');
+                const message = await page.evaluate(body => body.innerHTML, sucessMeesage);
+                document.getElementById("error").style.visibility = "hidden";
+                document.getElementById("success").style.visibility = "visible";
+                document.getElementById("success").textContent = message;
+
+                browser.close();
+            })();
+
+        }
+    </script>
+</body>
+
+</html>

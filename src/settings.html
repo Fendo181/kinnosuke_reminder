@@ -23,12 +23,22 @@
             background: #CCFFCC;
             border: 2px solid #00CC00;
         }
+
+        #logined {
+            padding: 12px;
+            font-weight: 850;
+            color: #262626;
+            background: rgb(255, 231, 95);
+            border: 2px solid rgb(255, 244, 180);
+        }
     </style>
 </head>
 
 <body>
     <h1>勤之助ログイン画面</h1>
     <!-- フォーム画面 -->
+    <div id="logined">
+    </div>
     <div id="error">
     </div>
     <div id="success">
@@ -41,6 +51,21 @@
     <p><button id="login-btn">決定</button></p>
     <!-- <script src="login.js"></script> -->
     <script>
+        window.onload = function onLoad() {
+            if (!localStorage.getItem('loginFlg')) {
+                document.getElementById("success").style.visibility = "hidden";
+                document.getElementById("logined").style.visibility = "hidden";
+                document.getElementById("error").style.visibility = "visible";
+                document.getElementById("error").textContent = '勤之助にログインをして下さい。';
+            }else{
+                document.getElementById("success").style.visibility = "hidden";
+                document.getElementById("logined").style.visibility = "visible";
+                document.getElementById("error").style.visibility = "hidden";
+                document.getElementById("logined").textContent = '勤之助にログイン済みです。';
+            }
+        }
+    </script>
+    <script>
         const puppeteer = require('puppeteer');
 
         // 初期状態ではメッセージは非表示
@@ -51,10 +76,6 @@
         login_btn.addEventListener('click', function () {
             let login = document.getElementById('id').value;
             let password = document.getElementById('password').value;
-
-            console.log(`id:${login}です`);
-            console.log(`password:${password}です`);
-
             (async () => {
                 const browser = await puppeteer.launch({
                     args: [
@@ -76,29 +97,38 @@
                     path: './screenshot/login.png',
                     fullPage: true
                 });
-                const buttonElement = await page.$('input[type=submit]');
+                const loginElement = await page.$('input[type=submit]');
                 // ログインする
-                await buttonElement.click();
+                await loginElement.click();
                 await page.screenshot({
                     path: './screenshot/logined.png',
                     fullPage: true
                 });
 
-                const isLoginErro = await page.$('#wrapper_main .txt_15_b_message_red') || false;
+                const isLoginError = await page.$('#wrapper_main .txt_15_b_message_red') || false;
 
-                if (isLoginErro) {
+                if (isLoginError) {
                     // ログイン失敗
-                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginErro);
+                    localStorage.setItem('loginFlg', false);
+
+                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginError);
                     document.getElementById("success").style.visibility = "hidden";
                     document.getElementById("error").style.visibility = "visible";
-                    ''
                     document.getElementById("error").textContent = `${erroMessage}`;
+                    return 0;
                 } else {
                     // ログイン成功
+                    localStorage.setItem('loginFlg', true);
+
                     document.getElementById("error").style.visibility = "hidden";
                     document.getElementById("success").style.visibility = "visible";
                     document.getElementById("success").textContent = '勤之助にログインできました!';
                 }
+
+                //認証に成功した値をlocalStorageにいれる。
+                localStorage.setItem('loginId', loginId);
+                localStorage.setItem('loginPassword', loginPassword);
+                browser.close();
             })();
         });
     </script>
