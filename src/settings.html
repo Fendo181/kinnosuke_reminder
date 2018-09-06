@@ -52,12 +52,10 @@
     <!-- <script src="login.js"></script> -->
     <script>
         window.onload = function onLoad() {
-            // まだ勤之助にログインをしていない
             if (!localStorage.getItem('loginFlg')) {
                 document.getElementById("success").style.visibility = "hidden";
                 document.getElementById("logined").style.visibility = "hidden";
                 document.getElementById("error").style.visibility = "visible";
-
                 document.getElementById("error").textContent = '勤之助にログインをして下さい。';
             }else{
                 document.getElementById("success").style.visibility = "hidden";
