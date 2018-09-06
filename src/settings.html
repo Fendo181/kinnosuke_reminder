@@ -36,6 +36,10 @@
 
 <body>
     <h1>勤之助ログイン画面</h1>
+    <div id="name">
+         <h2></h2>
+    </div>
+
     <!-- フォーム画面 -->
     <div id="logined">
     </div>
@@ -63,7 +67,9 @@
                 document.getElementById("success").style.visibility = "hidden";
                 document.getElementById("logined").style.visibility = "visible";
                 document.getElementById("error").style.visibility = "hidden";
+                
                 document.getElementById("logined").textContent = '勤之助にログイン済みです。';
+                document.getElementById("name").textContent = localStorage.getItem('userName')
             }
         }
     </script>
@@ -127,10 +133,14 @@
                 } else {
                     // ログイン成功
                     localStorage.setItem('loginFlg', true);
+                    const name = await page.$('.user_name');
+                    const userName = await page.evaluate(body => body.innerHTML, name);
+                    localStorage.setItem('userName', userName);
 
                     document.getElementById("error").style.visibility = "hidden";
                     document.getElementById("success").style.visibility = "visible";
                     document.getElementById("success").textContent = '勤之助にログインできました!';
+                    document.getElementById("name").textContent = localStorage.getItem('userName')
                 }
 
                 //認証に成功した値をlocalStorageにいれる。
