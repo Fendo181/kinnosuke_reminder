@@ -23,12 +23,22 @@
             background: #CCFFCC;
             border: 2px solid #00CC00;
         }
+
+        #logined {
+            padding: 12px;
+            font-weight: 850;
+            color: #262626;
+            background: rgb(255, 231, 95);
+            border: 2px solid rgb(255, 244, 180);
+        }
     </style>
 </head>
 
 <body>
     <h1>勤之助ログイン画面</h1>
     <!-- フォーム画面 -->
+    <div id="logined">
+    </div>
     <div id="error">
     </div>
     <div id="success">
@@ -40,6 +50,23 @@
     <input id="password" type="password" value="">
     <p><button id="login-btn">決定</button></p>
     <!-- <script src="login.js"></script> -->
+    <script>
+        window.onload = function onLoad() {
+            // まだ勤之助にログインをしていない
+            if (!localStorage.getItem('loginFlg')) {
+                document.getElementById("success").style.visibility = "hidden";
+                document.getElementById("logined").style.visibility = "hidden";
+                document.getElementById("error").style.visibility = "visible";
+
+                document.getElementById("error").textContent = '勤之助にログインをして下さい。';
+            }else{
+                document.getElementById("success").style.visibility = "hidden";
+                document.getElementById("logined").style.visibility = "visible";
+                document.getElementById("error").style.visibility = "hidden";
+                document.getElementById("logined").textContent = '勤之助にログイン済みです。';
+            }
+        }
+    </script>
     <script>
         const puppeteer = require('puppeteer');
 
