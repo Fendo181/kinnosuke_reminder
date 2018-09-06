@@ -76,19 +76,19 @@
                     path: './screenshot/login.png',
                     fullPage: true
                 });
-                const buttonElement = await page.$('input[type=submit]');
+                const loginElement = await page.$('input[type=submit]');
                 // ログインする
-                await buttonElement.click();
+                await loginElement.click();
                 await page.screenshot({
                     path: './screenshot/logined.png',
                     fullPage: true
                 });
 
-                const isLoginErro = await page.$('#wrapper_main .txt_15_b_message_red') || false;
+                const isLoginError = await page.$('#wrapper_main .txt_15_b_message_red') || false;
 
-                if (isLoginErro) {
+                if (isLoginError) {
                     // ログイン失敗
-                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginErro);
+                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginError);
                     document.getElementById("success").style.visibility = "hidden";
                     document.getElementById("error").style.visibility = "visible";
                     document.getElementById("error").textContent = `${erroMessage}`;
