@@ -71,9 +71,6 @@
 
             let loginId = localStorage.getItem('loginId');
             let loginPassword = localStorage.getItem('loginPassword');
-            console.log(loginId);
-            console.log(loginPassword);
-
             (async () => {
                 const browser = await puppeteer.launch({
                     args: [
@@ -104,7 +101,6 @@
                     fullPage: true
                 });
 
-                //取得してきた値を返す
                 const sucessMeesage = await page.$('.alert');
                 const message = await page.evaluate(body => body.innerHTML, sucessMeesage);
                 document.getElementById("error").style.visibility = "hidden";

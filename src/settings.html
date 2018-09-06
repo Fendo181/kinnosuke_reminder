@@ -51,10 +51,6 @@
         login_btn.addEventListener('click', function () {
             let login = document.getElementById('id').value;
             let password = document.getElementById('password').value;
-
-            console.log(`id:${login}です`);
-            console.log(`password:${password}です`);
-
             (async () => {
                 const browser = await puppeteer.launch({
                     args: [
