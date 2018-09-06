@@ -44,11 +44,14 @@
     <div id="success">
     </div>
 
+    <p><button id="storage-reset-button">登録している情報を全てリセットする</button></p>
+
     <p>勤之助のIDを入れて下さい</p>
     <p><input id="id" type="text" value=""></p>
     <p>勤之助のパスワードを入れて下さい</p>
     <input id="password" type="password" value="">
     <p><button id="login-btn">決定</button></p>
+
     <script>
         window.onload = function onLoad() {
             if (!localStorage.getItem('loginFlg')) {
@@ -70,6 +73,12 @@
         // 初期状態ではメッセージは非表示
         document.getElementById("error").style.visibility = "hidden";
         document.getElementById("success").style.visibility = "hidden";
+
+        let reset_btn = document.getElementById('storage-reset-button');
+        reset_btn.addEventListener("click",function(){
+            localStorage.clear();
+            location.reload();
+        });
 
         let login_btn = document.getElementById('login-btn');
         login_btn.addEventListener('click', function () {
