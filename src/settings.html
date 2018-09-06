@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>勤之助にログインします!</title>
+    <style type="text/css">
+        #error {
+            padding: 12px;
+            font-weight: 850;
+            color: #262626;
+            background: #FFEBE8;
+            border: 2px solid #990000;
+        }
+
+        #success {
+            padding: 12px;
+            font-weight: 850;
+            color: #262626;
+            background: #CCFFCC;
+            border: 2px solid #00CC00;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>勤之助ログイン画面</h1>
+    <!-- フォーム画面 -->
+    <div id="error">
+    </div>
+    <div id="success">
+    </div>
+
+    <p>勤之助のIDを入れて下さい</p>
+    <p><input id="id" type="text" value=""></p>
+    <p>勤之助のパスワードを入れて下さい</p>
+    <input id="password" type="password" value="">
+    <p><button id="login-btn">決定</button></p>
+    <!-- <script src="login.js"></script> -->
+    <script>
+        const puppeteer = require('puppeteer');
+
+        // 初期状態ではメッセージは非表示
+        document.getElementById("error").style.visibility = "hidden";
+        document.getElementById("success").style.visibility = "hidden";
+
+        let login_btn = document.getElementById('login-btn');
+        login_btn.addEventListener('click', function () {
+            let login = document.getElementById('id').value;
+            let password = document.getElementById('password').value;
+
+            console.log(`id:${login}です`);
+            console.log(`password:${password}です`);
+
+            (async () => {
+                const browser = await puppeteer.launch({
+                    args: [
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox'
+                    ]
+                });
+                const page = await browser.newPage();
+                await page.goto('https://www.4628.jp/?module=top&rd=1');
+                let companyId = 'paperboy';
+                let loginId = login;
+                let loginPassword = password;
+
+                await page.type('input[name="y_companycd"]', companyId);
+                await page.type('input[name="y_logincd"]', loginId);
+                await page.type('input[name="password"]', loginPassword);
+                // フォーム入力
+                await page.screenshot({
+                    path: './screenshot/login.png',
+                    fullPage: true
+                });
+                const buttonElement = await page.$('input[type=submit]');
+                // ログインする
+                await buttonElement.click();
+                await page.screenshot({
+                    path: './screenshot/logined.png',
+                    fullPage: true
+                });
+
+                const isLoginErro = await page.$('#wrapper_main .txt_15_b_message_red') || false;
+
+                if (isLoginErro) {
+                    // ログイン失敗
+                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginErro);
+                    document.getElementById("success").style.visibility = "hidden";
+                    document.getElementById("error").style.visibility = "visible";
+                    ''
+                    document.getElementById("error").textContent = `${erroMessage}`;
+                } else {
+                    // ログイン成功
+                    document.getElementById("error").style.visibility = "hidden";
+                    document.getElementById("success").style.visibility = "visible";
+                    document.getElementById("success").textContent = '勤之助にログインできました!';
+                }
+            })();
+        });
+    </script>
+
+</body>
+
+</html>

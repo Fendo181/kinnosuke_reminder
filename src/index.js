@@ -16,6 +16,9 @@ let menuTemplate = [{
         { label: 'About', accelerator: 'CmdOrCtrl+Shift+A', click: function(){
             showAboutDaialog();
         } },
+        { label: 'Setting', accelerator: 'CmdOrCtrl+,', click: function(){
+            showSettingWindow();
+        } },
         { type: 'separator'},
         { label: 'Quit', accelerator: 'CmdOrCtrl+C', click: function(){
             app.quit();
@@ -46,6 +49,19 @@ function showAboutDaialog(){
         message: 'About This App',
         detail: 'This app was created by @endu,@tecchan'
     })
+}
+
+function showSettingWindow(){
+    // create window
+    settingsWindow = new BrowserWindow({width: 600, height:400 });
+    settingsWindow.loadURL('file://'+ __dirname + '/settings.html');
+    // chomeのツールを読み込む
+    settingsWindow.webContents.openDevTools();
+    settingsWindow.show();
+    // 閉じた際の処理
+    settingsWindow.on('closed', function(){
+        settingsWindow = null;
+    });
 }
 
 
