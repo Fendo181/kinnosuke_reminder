@@ -19,6 +19,9 @@ let menuTemplate = [{
         { label: 'Setting', accelerator: 'CmdOrCtrl+,', click: function(){
             showSettingWindow();
         } },
+        { label: 'FlexTimeCheck', accelerator: 'CmdOrCtrl+T', click: function(){
+            showFlexTimeCheckWindow();
+        } },
         { type: 'separator'},
         { label: 'Quit', accelerator: 'CmdOrCtrl+C', click: function(){
             app.quit();
@@ -41,7 +44,6 @@ ipcMain.on('settings_attend', function(event, attend) {
 
 
 
-
 function showAboutDaialog(){
     dialog.showMessageBox({
         type: 'info',
@@ -55,6 +57,19 @@ function showSettingWindow(){
     // create window
     settingsWindow = new BrowserWindow({width: 600, height:400 });
     settingsWindow.loadURL('file://'+ __dirname + '/settings.html');
+    // chomeのツールを読み込む
+    settingsWindow.webContents.openDevTools();
+    settingsWindow.show();
+    // 閉じた際の処理
+    settingsWindow.on('closed', function(){
+        settingsWindow = null;
+    });
+}
+
+function showFlexTimeCheckWindow(){
+    // create window
+    settingsWindow = new BrowserWindow({width: 600, height:400 });
+    settingsWindow.loadURL('file://'+ __dirname + '/flex-time-check.html');
     // chomeのツールを読み込む
     settingsWindow.webContents.openDevTools();
     settingsWindow.show();
