@@ -9,7 +9,59 @@
 <body>
 <h1>勤之助に俺はログインするぞ！</h1>
 <!-- フォーム画面 -->
-<p>ログインフォームです</p>
+<p>勤之助のIDを入れて下さい</p>
+<p><input  id="id" type="text" value=""></p>
+<p>勤之助のパスワードを入れて下さい</p>
+<input  id="password" type="password" value="">
+<p><button id="login-btn">決定</button></p>
+<!-- <script src="login.js"></script> -->
+<script>
+    const puppeteer = require('puppeteer');
+
+    let login_btn = document.getElementById('login-btn');
+    login_btn.addEventListener('click', function(){
+        let login = document.getElementById('id').value;
+        let password = document.getElementById('password').value;
+
+        console.log(`id:${login}です`);
+        console.log(`password:${password}です`);
+
+        (async () => {
+            const browser = await puppeteer.launch({
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox'
+                ]
+            });
+            const page = await browser.newPage();
+            await page.goto('https://www.4628.jp/?module=top&rd=1');
+            // await page.content().then( content => console.log("************* TOP content="+content) );
+            // 勤之助にログインする
+            let companyId = 'paperboy';
+            let loginId = login;
+            let loginPassword = password;
+
+            await page.type('input[name="y_companycd"]', companyId);
+            await page.type('input[name="y_logincd"]', loginId);
+            await page.type('input[name="password"]', loginPassword);
+            // フォーム入力
+            await page.screenshot({path: './screenshot/login.png', fullPage: true});
+            const buttonElement = await page.$('input[type=submit]');
+            // ログインする
+            await buttonElement.click();
+            await page.screenshot({path: './screenshot/logined.png', fullPage: true});
+
+            const isLoginErro = await page.$('#wrapper_main .txt_15_b_message_red') || false;
+
+            if(isLoginErro){
+                // ログイン失敗
+                const erroMessage = await page.evaluate(body => body.innerHTML, isLoginErro);
+                console.log(erroMessage);
+                console.log(isLoginErro);
+            }
+        })();
+});
+</script>
 
 </body>
 </html>
