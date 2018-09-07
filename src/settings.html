@@ -143,27 +143,26 @@
 
                 const isLoginError = await page.$('#wrapper_main .txt_15_b_message_red') || false;
 
-                if (isLoginError) {
-                    // ログイン失敗
-                    localStorage.setItem('loginFlg', false);
-
-                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginError);
-                    document.getElementById("success").style.visibility = "hidden";
-                    document.getElementById("error").style.visibility = "visible";
-                    document.getElementById("error").textContent = `${erroMessage}`;
-                    return 0;
-                } else {
+                if (!isLoginError) {
                     // ログイン成功
                     localStorage.setItem('loginFlg', true);
                     const name = await page.$('.user_name');
                     const userName = await page.evaluate(body => body.innerHTML, name);
                     localStorage.setItem('userName', userName);
-
                     document.getElementById("error").style.visibility = "hidden";
                     document.getElementById("success").style.visibility = "visible";
                     document.getElementById("success").textContent = '勤之助にログインできました!';
                     document.getElementById("name").textContent = localStorage.getItem('userName')
+                } else {
+                    // ログイン失敗
+                    localStorage.setItem('loginFlg', false);
+                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginError);
+                    document.getElementById("success").style.visibility = "hidden";
+                    document.getElementById("error").style.visibility = "visible";
+                    document.getElementById("error").textContent = `${erroMessage}`;
+                    return 0;
                 }
+
                 //認証に成功した値をlocalStorageにいれる。
                 localStorage.setItem('loginId', loginId);
                 localStorage.setItem('loginPassword', loginPassword);
