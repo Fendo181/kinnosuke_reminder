@@ -137,11 +137,6 @@
                 const loginElement = await page.$('input[type=submit]');
                 // ログインする
                 await loginElement.click();
-                await page.screenshot({
-                    path: './screenshot/logined.png',
-                    fullPage: true
-                });
-
                 const isLoginError = await page.$('#wrapper_main .txt_15_b_message_red') || false;
 
                 if (isLoginError) {
