@@ -61,6 +61,7 @@
         <p><button id="login-btn">送信</button></p>
     </div>
 
+    <!-- フォームの表示処理 -->
     <script>
         window.onload = function onLoad() {
             if (!localStorage.getItem('loginFlg')) {
@@ -79,6 +80,8 @@
             }
         }
     </script>
+
+    <!-- ログイン処理 -->
     <script>
         const puppeteer = require('puppeteer');
 
