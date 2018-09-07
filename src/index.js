@@ -9,6 +9,8 @@ const dialog = electron.dialog; //ダイアログを読み込む。
 const ipcMain = electron.ipcMain; //ipcモジュールを読むこむ。ipc:inter-Process Communication
 
 let mainWindow;
+let settingsWindow;
+let flextTimeCheckWindow;
 
 let menuTemplate = [{
     label: 'kinnosuke_reminder',
@@ -42,11 +44,6 @@ ipcMain.on('settings_attend', function(event, attend) {
     mainWindow.webContents.send('set_attend', attend);
 });
 
-
-// 送られてくるログインフラグをを受け取る
-ipcMain.on('settings_attend', function(event, attend) {
-    showSettingWindow.webContents.send('set_attend', attend);
-});
 
 function showAboutDaialog(){
     dialog.showMessageBox({
