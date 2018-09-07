@@ -43,6 +43,10 @@ ipcMain.on('settings_attend', function(event, attend) {
 });
 
 
+// 送られてくるログインフラグをを受け取る
+ipcMain.on('settings_attend', function(event, attend) {
+    showSettingWindow.webContents.send('set_attend', attend);
+});
 
 function showAboutDaialog(){
     dialog.showMessageBox({
