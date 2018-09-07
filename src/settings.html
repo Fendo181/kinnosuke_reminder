@@ -91,8 +91,6 @@
                     ]
                 });
                 const page = await browser.newPage();
-                await page.goto('http://xxx.com');
-
                 await page.goto('https://www.4628.jp/?module=top&rd=1');
                 let companyId = 'paperboy';
                 let loginId = localStorage.getItem('loginId');
