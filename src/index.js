@@ -59,7 +59,7 @@ function showSettingWindow(){
     settingsWindow = new BrowserWindow({width: 600, height:400 });
     settingsWindow.loadURL('file://'+ __dirname + '/settings.html');
     // chomeのツールを読み込む
-    settingsWindow.webContents.openDevTools();
+    // settingsWindow.webContents.openDevTools();
     settingsWindow.show();
     // 閉じた際の処理
     settingsWindow.on('closed', function(){
@@ -72,7 +72,7 @@ function showFlexTimeCheckWindow(){
     flextTimeCheckWindow = new BrowserWindow({width: 600, height:400 });
     flextTimeCheckWindow.loadURL('file://'+ __dirname + '/flex-time-check.html');
     // chomeのツールを読み込む
-    flextTimeCheckWindow.webContents.openDevTools();
+    // flextTimeCheckWindow.webContents.openDevTools();
     flextTimeCheckWindow.show();
     // 閉じた際の処理
     flextTimeCheckWindow.on('closed', function(){
@@ -87,7 +87,7 @@ function createMainWindow(){
     mainWindow = new BrowserWindow({width: 600, height:400 });
     mainWindow.loadURL('file://'+ __dirname + '/index.html');
     // chomeのツールを読み込む
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
     // 閉じた際の処理
     mainWindow.on('closed', function(){
         mainWindow = null;
