@@ -105,6 +105,7 @@
                 const loginElement = await page.$('input[type=submit]');
                 // ログインする
                 await loginElement.click();
+                await page.waitFor(1000);
 
                 browser.close();
             })()
@@ -137,6 +138,8 @@
                 const loginElement = await page.$('input[type=submit]');
                 // ログインする
                 await loginElement.click();
+                await page.waitFor(1000);
+
                 const isLoginError = await page.$('#wrapper_main .txt_15_b_message_red') || false;
 
                 if (isLoginError) {
