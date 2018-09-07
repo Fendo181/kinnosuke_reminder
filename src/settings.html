@@ -45,13 +45,12 @@
         <p class="logined-message"></p>
         <p><button class="attend-btn">出勤する</button></p>
         <p><button class="leave-btn">退勤する</button></p>
+        <p><button id="logout-button">ログアウトする</button></p>
     </div>
     <div id="error">
     </div>
     <div id="success">
     </div>
-
-    <p><button id="storage-reset-button">登録している情報を全てリセットする</button></p>
 
     <div id="login-form">
         <p>勤之助のログインIDを入れて下さい</p>
@@ -80,17 +79,9 @@
             }
         }
     </script>
-
     <!-- ログイン処理 -->
     <script>
         const puppeteer = require('puppeteer');
-
-        let reset_btn = document.getElementById('storage-reset-button');
-        reset_btn.addEventListener("click", function () {
-            localStorage.clear();
-            location.reload();
-        });
-
         let login_btn = document.getElementById('login-btn');
         login_btn.addEventListener('click', function () {
             let login = document.getElementById('id').value;
@@ -152,7 +143,15 @@
             })();
         });
     </script>
-
+    <!-- ログアウト処理 -->
+    <script>
+        let reset_btn = document.getElementById('logout-button');
+        reset_btn.addEventListener("click", function () {
+            window.localStorage.removeItem('loginFlg');
+            window.localStorage.removeItem('loginId');
+            window.localStorage.removeItem('loginPassword');
+            location.reload();
+        });
+    </script>
 </body>
-
 </html>
