@@ -82,25 +82,13 @@
 
                 const page = await browser.newPage();
                 await page.goto('https://flex-time-check.lolipop.io/');
-                await page.screenshot({
-                    path: './screenshot/flext.png',
-                    fullPage: true
-                });
-
                 //フォーム入力
                 await page.type('input[name="user[id]"]', loginId);
                 await page.type('input[name="user[password]"]', loginPassword);
-                await page.screenshot({
-                    path: './screenshot/flext2.png',
-                    fullPage: true
-                });
                 // ログインする
                 const loginElement = await page.$('input[type=submit]');
                 await loginElement.click();
-                await page.screenshot({
-                    path: './screenshot/flex3.png',
-                    fullPage: true
-                });
+                await page.waitFor(5000);
 
                 const sucessMeesage = await page.$('.alert');
                 const message = await page.evaluate(body => body.innerHTML, sucessMeesage);
