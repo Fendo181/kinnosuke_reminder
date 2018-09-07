@@ -108,6 +108,18 @@
                 const isIpAddressError = await page.$('#sub_header_border_top .txt_12_red') || false;
                 const erroMessage = await page.evaluate(body => body.innerHTML, isIpAddressError);
 
+                if (!isIpAddressError) {
+                    // ログイン成功
+                    document.getElementById("error").style.visibility = "hidden";
+                    document.getElementById("success").textContent = '出勤しました!';
+                } else {
+                    // IPアドレスで弾かれる
+                    document.getElementById("success").style.visibility = "hidden";
+                    document.getElementById("error").style.visibility = "visible";
+                    document.getElementById("error").textContent = `${erroMessage}`;
+                    return 0;
+                }
+
                 browser.close();
             })()
         });
