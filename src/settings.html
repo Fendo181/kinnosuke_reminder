@@ -43,8 +43,8 @@
     <!-- フォーム画面 -->
     <div id="logined">
         <p class="logined-message"></p>
-        <p><button class="attend-btn">出勤する</button></p>
-        <p><button class="leave-btn">退勤する</button></p>
+        <p><button id="attend-btn">出勤する</button></p>
+        <p><button id="leave-btn">退勤する</button></p>
         <p><button id="logout-button">ログアウトする</button></p>
     </div>
     <div id="error">
@@ -78,6 +78,37 @@
                 document.getElementById("name").textContent = localStorage.getItem('userName')
             }
         }
+    </script>
+    <!-- 出勤処理 -->
+    <script>
+        let attend_btn = document.getElementById('attend-btn');
+        attend_btn.addEventListener('click', function () {
+            (async () => {
+                const browser = await puppeteer.launch({
+                    args: [
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox'
+                    ]
+                });
+                const page = await browser.newPage();
+                await page.goto('http://xxx.com');
+
+                await page.goto('https://www.4628.jp/?module=top&rd=1');
+                let companyId = 'paperboy';
+                let loginId = localStorage.getItem('loginId');
+                let loginPassword = localStorage.getItem('loginPassword');
+
+                await page.type('input[name="y_companycd"]', companyId);
+                await page.type('input[name="y_logincd"]', loginId);
+                await page.type('input[name="password"]', loginPassword);
+
+                const loginElement = await page.$('input[type=submit]');
+                // ログインする
+                await loginElement.click();
+
+                browser.close();
+            })()
+        });
     </script>
     <!-- ログイン処理 -->
     <script>
@@ -154,4 +185,5 @@
         });
     </script>
 </body>
+
 </html>
