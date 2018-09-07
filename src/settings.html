@@ -67,7 +67,7 @@
                 document.getElementById("success").style.visibility = "hidden";
                 document.getElementById("logined").style.visibility = "visible";
                 document.getElementById("error").style.visibility = "hidden";
-                
+
                 document.getElementById("logined").textContent = '勤之助にログイン済みです。';
                 document.getElementById("name").textContent = localStorage.getItem('userName')
             }
@@ -106,11 +106,7 @@
                 await page.type('input[name="y_companycd"]', companyId);
                 await page.type('input[name="y_logincd"]', loginId);
                 await page.type('input[name="password"]', loginPassword);
-                // フォーム入力
-                await page.screenshot({
-                    path: './screenshot/login.png',
-                    fullPage: true
-                });
+
                 const loginElement = await page.$('input[type=submit]');
                 // ログインする
                 await loginElement.click();
