@@ -107,6 +107,9 @@
                 await loginElement.click();
                 await page.waitFor(1000);
 
+                const isIpAddressError = await page.$('#sub_header_border_top .txt_12_red') || false;
+                const erroMessage = await page.evaluate(body => body.innerHTML, isIpAddressError);
+
                 browser.close();
             })()
         });
