@@ -24,7 +24,7 @@
             border: 2px solid #00CC00;
         }
 
-        #logined {
+        .logined-message {
             padding: 12px;
             font-weight: 850;
             color: #262626;
@@ -37,25 +37,30 @@
 <body>
     <h1>勤之助ログイン画面</h1>
     <div id="name">
-         <h2></h2>
+        <h2></h2>
     </div>
 
     <!-- フォーム画面 -->
     <div id="logined">
+        <p class="logined-message"></p>
+        <p><button id="attend-btn">出勤する</button></p>
+        <p><button id="leave-btn">退勤する</button></p>
+        <p><button id="logout-button">ログアウトする</button></p>
     </div>
     <div id="error">
     </div>
     <div id="success">
     </div>
 
-    <p><button id="storage-reset-button">登録している情報を全てリセットする</button></p>
+    <div id="login-form">
+        <p>勤之助のログインIDを入れて下さい</p>
+        <p><input id="id" type="text" value=""></p>
+        <p>勤之助のパスワードを入れて下さい</p>
+        <input id="password" type="password" value="">
+        <p><button id="login-btn">送信</button></p>
+    </div>
 
-    <p>勤之助のログインIDを入れて下さい</p>
-    <p><input id="id" type="text" value=""></p>
-    <p>勤之助のパスワードを入れて下さい</p>
-    <input id="password" type="password" value="">
-    <p><button id="login-btn">決定</button></p>
-
+    <!-- フォームの表示処理 -->
     <script>
         window.onload = function onLoad() {
             if (!localStorage.getItem('loginFlg')) {
@@ -63,29 +68,65 @@
                 document.getElementById("logined").style.visibility = "hidden";
                 document.getElementById("error").style.visibility = "visible";
                 document.getElementById("error").textContent = '勤之助にログインをして下さい。';
-            }else{
+            } else {
                 document.getElementById("success").style.visibility = "hidden";
                 document.getElementById("logined").style.visibility = "visible";
                 document.getElementById("error").style.visibility = "hidden";
+                document.getElementById("login-form").style.visibility = "hidden";
 
-                document.getElementById("logined").textContent = '勤之助にログイン済みです。';
+                document.querySelector("#logined .logined-message").textContent = '勤之助にログイン済みです。';
                 document.getElementById("name").textContent = localStorage.getItem('userName')
             }
         }
     </script>
+    <!-- 出勤処理 -->
+    <script>
+        let attend_btn = document.getElementById('attend-btn');
+        attend_btn.addEventListener('click', function () {
+            (async () => {
+                const browser = await puppeteer.launch({
+                    args: [
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox'
+                    ]
+                });
+                const page = await browser.newPage();
+                await page.goto('https://www.4628.jp/?module=top&rd=1');
+                let companyId = 'paperboy';
+                let loginId = localStorage.getItem('loginId');
+                let loginPassword = localStorage.getItem('loginPassword');
+
+                await page.type('input[name="y_companycd"]', companyId);
+                await page.type('input[name="y_logincd"]', loginId);
+                await page.type('input[name="password"]', loginPassword);
+
+                const loginElement = await page.$('input[type=submit]');
+                // ログインする
+                await loginElement.click();
+                await page.waitFor(1000);
+
+                const isIpAddressError = await page.$('#sub_header_border_top .txt_12_red') || false;
+                const erroMessage = await page.evaluate(body => body.innerHTML, isIpAddressError);
+
+                if (!isIpAddressError) {
+                    // ログイン成功
+                    document.getElementById("error").style.visibility = "hidden";
+                    document.getElementById("success").textContent = '出勤しました!';
+                } else {
+                    // IPアドレスで弾かれる
+                    document.getElementById("success").style.visibility = "hidden";
+                    document.getElementById("error").style.visibility = "visible";
+                    document.getElementById("error").textContent = `${erroMessage}`;
+                    return 0;
+                }
+
+                browser.close();
+            })()
+        });
+    </script>
+    <!-- ログイン処理 -->
     <script>
         const puppeteer = require('puppeteer');
-
-        // 初期状態ではメッセージは非表示
-        document.getElementById("error").style.visibility = "hidden";
-        document.getElementById("success").style.visibility = "hidden";
-
-        let reset_btn = document.getElementById('storage-reset-button');
-        reset_btn.addEventListener("click",function(){
-            localStorage.clear();
-            location.reload();
-        });
-
         let login_btn = document.getElementById('login-btn');
         login_btn.addEventListener('click', function () {
             let login = document.getElementById('id').value;
@@ -110,43 +151,49 @@
                 const loginElement = await page.$('input[type=submit]');
                 // ログインする
                 await loginElement.click();
-                await page.screenshot({
-                    path: './screenshot/logined.png',
-                    fullPage: true
-                });
+                await page.waitFor(1000);
 
                 const isLoginError = await page.$('#wrapper_main .txt_15_b_message_red') || false;
 
-                if (isLoginError) {
-                    // ログイン失敗
-                    localStorage.setItem('loginFlg', false);
-
-                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginError);
-                    document.getElementById("success").style.visibility = "hidden";
-                    document.getElementById("error").style.visibility = "visible";
-                    document.getElementById("error").textContent = `${erroMessage}`;
-                    return 0;
-                } else {
+                if (!isLoginError) {
                     // ログイン成功
                     localStorage.setItem('loginFlg', true);
                     const name = await page.$('.user_name');
                     const userName = await page.evaluate(body => body.innerHTML, name);
                     localStorage.setItem('userName', userName);
-
                     document.getElementById("error").style.visibility = "hidden";
                     document.getElementById("success").style.visibility = "visible";
                     document.getElementById("success").textContent = '勤之助にログインできました!';
                     document.getElementById("name").textContent = localStorage.getItem('userName')
+                } else {
+                    // ログイン失敗
+                    localStorage.setItem('loginFlg', false);
+                    const erroMessage = await page.evaluate(body => body.innerHTML, isLoginError);
+                    document.getElementById("success").style.visibility = "hidden";
+                    document.getElementById("error").style.visibility = "visible";
+                    document.getElementById("error").textContent = `${erroMessage}`;
+                    return 0;
                 }
 
                 //認証に成功した値をlocalStorageにいれる。
                 localStorage.setItem('loginId', loginId);
                 localStorage.setItem('loginPassword', loginPassword);
+                await page.waitFor(2000);
                 browser.close();
+                location.reload();
             })();
         });
     </script>
-
+    <!-- ログアウト処理 -->
+    <script>
+        let reset_btn = document.getElementById('logout-button');
+        reset_btn.addEventListener("click", function () {
+            window.localStorage.removeItem('loginFlg');
+            window.localStorage.removeItem('loginId');
+            window.localStorage.removeItem('loginPassword');
+            location.reload();
+        });
+    </script>
 </body>
 
 </html>

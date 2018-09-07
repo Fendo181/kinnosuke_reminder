@@ -9,6 +9,8 @@ const dialog = electron.dialog; //ダイアログを読み込む。
 const ipcMain = electron.ipcMain; //ipcモジュールを読むこむ。ipc:inter-Process Communication
 
 let mainWindow;
+let settingsWindow;
+let flextTimeCheckWindow;
 
 let menuTemplate = [{
     label: 'kinnosuke_reminder',
@@ -43,7 +45,6 @@ ipcMain.on('settings_attend', function(event, attend) {
 });
 
 
-
 function showAboutDaialog(){
     dialog.showMessageBox({
         type: 'info',
@@ -68,14 +69,14 @@ function showSettingWindow(){
 
 function showFlexTimeCheckWindow(){
     // create window
-    settingsWindow = new BrowserWindow({width: 600, height:400 });
-    settingsWindow.loadURL('file://'+ __dirname + '/flex-time-check.html');
+    flextTimeCheckWindow = new BrowserWindow({width: 600, height:400 });
+    flextTimeCheckWindow.loadURL('file://'+ __dirname + '/flex-time-check.html');
     // chomeのツールを読み込む
-    settingsWindow.webContents.openDevTools();
-    settingsWindow.show();
+    flextTimeCheckWindow.webContents.openDevTools();
+    flextTimeCheckWindow.show();
     // 閉じた際の処理
-    settingsWindow.on('closed', function(){
-        settingsWindow = null;
+    flextTimeCheckWindow.on('closed', function(){
+        flextTimeCheckWindow = null;
     });
 }
 
