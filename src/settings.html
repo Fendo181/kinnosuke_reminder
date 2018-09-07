@@ -24,7 +24,7 @@
             border: 2px solid #00CC00;
         }
 
-        #logined {
+        .logined-message {
             padding: 12px;
             font-weight: 850;
             color: #262626;
@@ -37,11 +37,14 @@
 <body>
     <h1>勤之助ログイン画面</h1>
     <div id="name">
-         <h2></h2>
+        <h2></h2>
     </div>
 
     <!-- フォーム画面 -->
     <div id="logined">
+        <p class="logined-message"></p>
+        <p><button class="attend-btn">出勤する</button></p>
+        <p><button class="leave-btn">退勤する</button></p>
     </div>
     <div id="error">
     </div>
@@ -50,11 +53,13 @@
 
     <p><button id="storage-reset-button">登録している情報を全てリセットする</button></p>
 
-    <p>勤之助のログインIDを入れて下さい</p>
-    <p><input id="id" type="text" value=""></p>
-    <p>勤之助のパスワードを入れて下さい</p>
-    <input id="password" type="password" value="">
-    <p><button id="login-btn">決定</button></p>
+    <div id="login-form">
+        <p>勤之助のログインIDを入れて下さい</p>
+        <p><input id="id" type="text" value=""></p>
+        <p>勤之助のパスワードを入れて下さい</p>
+        <input id="password" type="password" value="">
+        <p><button id="login-btn">送信</button></p>
+    </div>
 
     <script>
         window.onload = function onLoad() {
@@ -63,12 +68,13 @@
                 document.getElementById("logined").style.visibility = "hidden";
                 document.getElementById("error").style.visibility = "visible";
                 document.getElementById("error").textContent = '勤之助にログインをして下さい。';
-            }else{
+            } else {
                 document.getElementById("success").style.visibility = "hidden";
                 document.getElementById("logined").style.visibility = "visible";
                 document.getElementById("error").style.visibility = "hidden";
+                document.getElementById("login-form").style.visibility = "hidden";
 
-                document.getElementById("logined").textContent = '勤之助にログイン済みです。';
+                document.querySelector("#logined .logined-message").textContent = '勤之助にログイン済みです。';
                 document.getElementById("name").textContent = localStorage.getItem('userName')
             }
         }
@@ -76,12 +82,8 @@
     <script>
         const puppeteer = require('puppeteer');
 
-        // 初期状態ではメッセージは非表示
-        document.getElementById("error").style.visibility = "hidden";
-        document.getElementById("success").style.visibility = "hidden";
-
         let reset_btn = document.getElementById('storage-reset-button');
-        reset_btn.addEventListener("click",function(){
+        reset_btn.addEventListener("click", function () {
             localStorage.clear();
             location.reload();
         });
@@ -138,11 +140,12 @@
                     document.getElementById("success").textContent = '勤之助にログインできました!';
                     document.getElementById("name").textContent = localStorage.getItem('userName')
                 }
-
                 //認証に成功した値をlocalStorageにいれる。
                 localStorage.setItem('loginId', loginId);
                 localStorage.setItem('loginPassword', loginPassword);
+                await page.waitFor(2000);
                 browser.close();
+                location.reload();
             })();
         });
     </script>
